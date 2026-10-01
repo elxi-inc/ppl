@@ -126,6 +126,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   <main id="main"></main>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 (function () {
   "use strict";
@@ -139,6 +140,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   var store = { mode: "local", col: null };
   var tab = "ringkasan";
   var loaded = false;
+  var dl = null;
 
   var TABS = [
     ["ringkasan", "Ringkasan"], ["profil", "Profil"], ["observasi", "Observasi"],
@@ -272,6 +274,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   async function initStore() {
     try {
       if (window.claude && window.claude.use) {
+        try { dl = await window.claude.use("downloads"); } catch (e) { dl = null; }
         var res = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
         var db = res[0], user = res[1];
         if (db && user) {
@@ -484,8 +487,10 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       var pct = r[3] ? Math.min(100, Math.round(r[2] / r[3] * 100)) : 0;
       return '<button type="button" class="prog" data-go="' + r[0] + '"><span class="pl">' + esc(r[1]) + '</span><span class="pv">' + pct + '%</span><div class="bar"><div style="width:' + pct + '%"></div></div><small>' + esc(r[4]) + "</small></button>";
     }).join("") + "</div></section>" +
-      '<section class="card"><h2>Cadangan data</h2><p class="note">Data tersimpan otomatis. Salin sebagai teks bila ingin menyimpan cadangan sendiri.</p>' +
-      '<div><button type="button" class="btn ghost" data-act="copy">Salin semua data</button></div><div id="copyOut"></div></section>';
+      '<section class="card"><h2>Unduh dan cadangan</h2>' +
+      '<p class="note">Data tersimpan otomatis. PDF memuat semua isian: profil, observasi, kartu bimbingan, jurnal dan RPP, penilaian, serta kelengkapan laporan. Format mengikuti ketentuan laporan di buku pedoman: kertas A4, Times New Roman 12, spasi 1,5, margin kiri 4 cm dan margin atas, kanan, bawah 3 cm. Isi tabel memakai spasi 1. Tulisan non-Latin seperti huruf Arab belum bisa ditampilkan di PDF.</p>' +
+      '<div class="sep"><button type="button" class="btn" data-act="pdf">Unduh PDF</button><button type="button" class="btn ghost" data-act="copy">Salin semua data</button></div>' +
+      '<p class="note" id="pdfMsg" role="status"></p><div id="copyOut"></div></section>';
   };
 
   /* ---------- render + events ---------- */
@@ -522,6 +527,8 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
         t.setAttribute("data-armed", "1"); t.textContent = "Klik lagi untuk menghapus";
         setTimeout(function () { if (t.isConnected) { t.removeAttribute("data-armed"); t.textContent = "Hapus pertemuan ini"; } }, 3000);
       } else { S.rpp.items.splice(parseInt(t.dataset.i, 10), 1); touch("rpp"); render(); }
+    } else if (act === "pdf") {
+      downloadPdf();
     } else if (act === "copy") {
       var txt = JSON.stringify(S, null, 2), out = document.getElementById("copyOut");
       var show = function () { out.innerHTML = '<textarea class="out" readonly aria-label="Data lengkap">' + esc(txt) + "</textarea>"; var ta = out.firstChild; ta.focus(); ta.select(); };
@@ -530,6 +537,186 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   });
   document.addEventListener("visibilitychange", function () { if (document.hidden) flushAll(); });
   window.addEventListener("pagehide", flushAll);
+
+  /* ---------- PDF (ketentuan buku: A4, Times New Roman 12, spasi 1,5, margin kiri 4 cm, lainnya 3 cm) ---------- */
+  var MM = { L: 40, R: 30, T: 30, B: 30, W: 140, H: 297 };
+  var BULAN = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+  function latin(t) {
+    return String(t == null ? "" : t).replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/[–—]/g, "-")
+      .replace(/…/g, "...").replace(/ /g, " ").replace(/\t/g, " ").replace(/[^\n\x20-\x7E¡-ÿ]+/g, "[teks non-Latin]");
+  }
+  function tgl(v) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ""); if (!m) return v || "";
+    return parseInt(m[3], 10) + " " + BULAN[parseInt(m[2], 10) - 1] + " " + m[1];
+  }
+  function buildPdf() {
+    var J = window.jspdf.jsPDF;
+    var doc = new J({ unit: "mm", format: "a4", orientation: "portrait" });
+    var LH = 12 * 1.5 / (72 / 25.4), y = MM.T, TL = 12 * 1.15 / (72 / 25.4), PAD = 1.6;
+    doc.setFont("times", "normal"); doc.setFontSize(12); doc.setLineHeightFactor(1.15);
+    doc.setDrawColor(0); doc.setLineWidth(0.2);
+
+    function room(h) { if (y + h > MM.H - MM.B) { doc.addPage(); y = MM.T; } }
+    function gap(n) { y += LH * (n == null ? 0.5 : n); }
+    function line(text, o) {
+      o = o || {};
+      doc.setFont("times", o.bold ? "bold" : o.italic ? "italic" : "normal");
+      var ind = o.indent || 0, w = MM.W - ind;
+      var ls = doc.splitTextToSize(latin(text), w);
+      ls.forEach(function (l) {
+        room(LH);
+        if (o.center) doc.text(l, MM.L + MM.W / 2, y + 4.7, { align: "center" }); else doc.text(l, MM.L + ind, y + 4.7);
+        y += LH;
+      });
+    }
+    function h1(t) { room(LH * 2); line(t, { bold: true, center: true }); }
+    function h2(t) { gap(0.5); room(LH * 3); line(t, { bold: true }); }
+    function h3(t) { room(LH * 2); line(t, { bold: true, indent: 4 }); }
+    function kv(k, v) {
+      var KW = 46;
+      var ls = doc.splitTextToSize(latin(filled(v) ? v : "-"), MM.W - KW - 4);
+      doc.setFont("times", "normal");
+      ls.forEach(function (l, i) {
+        room(LH);
+        if (i === 0) { doc.text(latin(k), MM.L, y + 4.7); doc.text(":", MM.L + KW, y + 4.7); }
+        doc.text(l, MM.L + KW + 4, y + 4.7);
+        y += LH;
+      });
+    }
+    function para(label, v) {
+      line(label, { bold: true });
+      line(filled(v) ? v : "-", { indent: 4 });
+    }
+    function table(heads, widths, rows, o) {
+      o = o || {};
+      function measure(cells, bold) {
+        doc.setFont("times", bold ? "bold" : "normal");
+        var max = 1, ls = cells.map(function (c, i) { var l = doc.splitTextToSize(latin(c), widths[i] - 2 * PAD); if (l.length > max) max = l.length; return l; });
+        return { ls: ls, h: Math.max(max * TL + 2 * PAD, o.minH || 0) };
+      }
+      function row(cells, bold, fill, head) {
+        var r = measure(cells, bold);
+        if (y + r.h > MM.H - MM.B) { doc.addPage(); y = MM.T; if (!head) row(heads, true, true, true); r = measure(cells, bold); }
+        var x = MM.L;
+        doc.setFont("times", bold ? "bold" : "normal");
+        r.ls.forEach(function (l, i) {
+          if (fill) { doc.setFillColor(232, 232, 232); doc.rect(x, y, widths[i], r.h, "FD"); } else doc.rect(x, y, widths[i], r.h, "S");
+          doc.text(l, x + PAD, y + PAD + 3.6);
+          x += widths[i];
+        });
+        y += r.h;
+      }
+      row(heads, true, true, true);
+      rows.forEach(function (r) { row(r, !!o.boldLast && r === rows[rows.length - 1], false, false); });
+      y += 3;
+    }
+
+    var P = S.profil;
+    /* judul */
+    h1("BERKAS PRAKTIK PENGALAMAN LAPANGAN (PPL)");
+    line("Fakultas Tarbiyah dan Keguruan", { center: true });
+    line("Universitas Islam Tribakti Lirboyo Kediri", { center: true });
+    line("Tahun Akademik " + (P.tahun || "2026/2027"), { center: true });
+    gap(0.5);
+
+    h2("A. Identitas Praktikan");
+    kv("Nama", P.nama); kv("NPM", P.npm); kv("Program Studi", P.prodi); kv("Lokasi PPL", P.lokasi);
+    kv("Dosen Pembimbing", P.dpl); kv("Guru Pamong", P.pamong); kv("Kepala Sekolah", P.kepsek);
+    kv("Mata Pelajaran", P.mapel); kv("Kelas / Fase", P.kelas);
+    kv("Masa PPL", (P.mulai || P.selesai) ? (tgl(P.mulai) || "-") + " s.d. " + (tgl(P.selesai) || "-") : "");
+
+    /* observasi */
+    h2("B. Hasil Observasi");
+    h3("1. Kondisi Sekolah" + (S.observasi.tgl ? " (" + tgl(S.observasi.tgl) + ")" : ""));
+    KONDISI.forEach(function (r, i) { para((i + 1) + ". " + r[0], getp("observasi.kondisi." + i)); });
+    gap(0.3);
+    h3("2. Observasi Kegiatan Belajar Mengajar");
+    kv("Kelas", S.observasi.kbmKelas); kv("Jam Pelajaran", S.observasi.kbmJam);
+    kv("Mata Pelajaran", S.observasi.kbmMapel); kv("Hari / Tanggal", tgl(S.observasi.kbmTgl));
+    KBM.forEach(function (g) {
+      gap(0.3); line(g[0], { bold: true });
+      g[2].forEach(function (q, i) { line((i + 1) + ". " + q, { indent: 4 }); line(filled(getp("observasi.kbm." + g[1] + i)) ? getp("observasi.kbm." + g[1] + i) : "-", { indent: 8, italic: true }); });
+    });
+    gap(0.3); para("Kesan umum", S.observasi.kesan);
+
+    /* kartu bimbingan */
+    doc.addPage(); y = MM.T;
+    h2("C. Kartu Bimbingan");
+    [["dpl", "1. Bimbingan dengan Dosen Pembimbing", "Tanda tangan DPL"], ["pamong", "2. Bimbingan dengan Guru Pamong", "Tanda tangan guru pamong"]].forEach(function (c) {
+      h3(c[1]); gap(0.2);
+      var rows = S.bimbingan[c[0]].map(function (r, i) { return [String(i + 1), tgl(r.tgl), r.materi || "", r.ttd ? "Sudah" : ""]; });
+      table(["No", "Tanggal", "Materi Bimbingan", c[2]], [10, 32, 62, 36], rows, { minH: 9 });
+    });
+
+    /* jurnal */
+    doc.addPage(); y = MM.T;
+    h2("D. Jurnal dan Rencana Pembelajaran");
+    if (!S.rpp.items.length) line("Belum ada pertemuan yang dicatat.", { italic: true });
+    S.rpp.items.forEach(function (it, i) {
+      h3("Pertemuan ke-" + (it.ke || i + 1));
+      kv("Tanggal", tgl(it.tgl)); kv("Mata Pelajaran", it.mapel); kv("Kelas / Fase", it.kelas);
+      kv("Materi Pokok", it.materi); kv("Alokasi Waktu", it.waktu);
+      kv("Prinsip", [it.p1 ? "Berkesadaran" : "", it.p2 ? "Bermakna" : "", it.p3 ? "Menggembirakan" : ""].filter(Boolean).join(", "));
+      para("Capaian dan Tujuan Pembelajaran", it.cp); para("Kegiatan Pendahuluan", it.awal); para("Kegiatan Inti", it.inti);
+      para("Kegiatan Penutup", it.akhir); para("Asesmen", it.asesmen); para("Refleksi", it.refleksi);
+      gap(0.5);
+    });
+
+    /* penilaian */
+    doc.addPage(); y = MM.T;
+    h2("E. Penilaian");
+    function skor(title, list, prefix, div) {
+      h3(title); gap(0.2);
+      var sc = sumList(prefix, list.length);
+      var rows = list.map(function (t, i) { var v = getp(prefix + "." + i); return [String(i + 1), t, filled(v) ? String(v) : ""]; });
+      rows.push(["", "Nilai (total skor / " + div + " x 100)", sc.count === list.length ? fmt(sc.total / div * 100) : "-"]);
+      table(["No", "Indikator", "Skor"], [10, 106, 24], rows, { boldLast: true, minH: 8 });
+    }
+    skor("1. Kompetensi Kepribadian (N3)", N3, "nilai.n3", 35);
+    skor("2. Kompetensi Sosial (N4)", N4, "nilai.n4", 25);
+    h3("3. Praktik Persekolahan (N5)"); gap(0.2);
+    var r5 = N5.map(function (t, i) { return [String(i + 1), t, getp("nilai.n5k." + i) ? "Ya" : "Belum"]; });
+    r5.push(["", "Nilai akhir", filled(getp("nilai.n5")) ? String(getp("nilai.n5")) : "-"]);
+    table(["No", "Kegiatan Persekolahan", "Checklist"], [10, 106, 24], r5, { boldLast: true, minH: 8 });
+    var k5 = n5Label(num(getp("nilai.n5"))); if (k5) { line("Keterangan: " + k5, { indent: 0 }); gap(0.3); }
+    h3("4. Nilai Hasil PPL (NH)"); gap(0.2);
+    var nh = nhCalc();
+    var rn = NH_PARTS.map(function (q, i) { var v = getp("nilai.nh." + q[0]); return [String(i + 1), q[1], filled(v) ? String(v) : "-"]; });
+    rn.push(["", "Nilai Hasil (rata-rata)" + (nh && nh.n < 5 ? ", sementara" : ""), nh ? fmt(nh.avg) : "-"]);
+    table(["No", "Komponen", "Nilai"], [10, 106, 24], rn, { boldLast: true, minH: 8 });
+
+    /* kelengkapan */
+    h2("F. Kelengkapan Dokumen");
+    h3("1. Laporan PPL"); gap(0.2);
+    var rl = [];
+    LAPORAN.forEach(function (b) { b[1].forEach(function (r) { rl.push([b[0] === LAPORAN[0][0] ? "Bab I" : b[0].indexOf("Bab II ") === 0 ? "Bab II" : "Bab III", r[1], String(r[2]), getp("nilai.lap." + r[0]) ? "Sudah" : "Belum"]); }); });
+    table(["Bab", "Bagian", "Poin", "Status"], [20, 80, 16, 24], rl, { minH: 8 });
+    line("Poin terpenuhi: " + pctWeights("lap", [].concat.apply([], LAPORAN.map(function (b) { return b[1]; })), true) + " dari 100", { bold: true }); gap(0.3);
+    h3("2. Draf Artikel"); gap(0.2);
+    var ra = ARTIKEL.map(function (r, i) { return [String(i + 1), r[0], String(r[1]), getp("nilai.art." + i) ? "Sudah" : "Belum"]; });
+    table(["No", "Aspek", "Poin", "Status"], [10, 90, 16, 24], ra, { minH: 8 });
+    line("Poin terpenuhi: " + pctWeights("art", ARTIKEL, false) + " dari 100", { bold: true });
+
+    /* nomor halaman */
+    var n = doc.getNumberOfPages();
+    for (var i = 1; i <= n; i++) { doc.setPage(i); doc.setFont("times", "normal"); doc.setFontSize(12); doc.text(String(i), 105, MM.H - 15, { align: "center" }); }
+    return doc.output("arraybuffer");
+  }
+  async function downloadPdf() {
+    var out = document.getElementById("pdfMsg");
+    function msg(t) { if (out) out.textContent = t; }
+    if (!window.jspdf) { msg("Pembuat PDF belum termuat. Periksa koneksi, lalu muat ulang halaman."); return; }
+    if (!dl) { msg("Fitur unduh tidak tersedia di tampilan ini. Gunakan Salin semua data."); return; }
+    msg("Membuat PDF…");
+    try {
+      await Promise.all(SECTIONS.map(function (s) { return flush(s); }));
+      var nm = (S.profil.nama || "").replace(/[^A-Za-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      await dl.save({ filename: "Berkas-PPL" + (nm ? "-" + nm : "") + ".pdf", data: buildPdf() });
+      msg("PDF disimpan.");
+    } catch (e) {
+      msg(e && e.code === "declined" ? "Unduhan dibatalkan." : "PDF gagal dibuat atau disimpan. Coba lagi.");
+    }
+  }
 
   /* ---------- boot ---------- */
   normalize(); render();
