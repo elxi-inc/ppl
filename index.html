@@ -150,17 +150,17 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   var KONDISI = [
     ["Kondisi sarana prasarana sekolah", "Gedung sekolah, perpustakaan, laboratorium, tempat ibadah, fasilitas KBM, dll"],
     ["Kondisi lingkungan sekolah", "Tamanisasi, kebersihan, kerapian, dll"],
-    ["Kondisi manajerial sekolah", ""],
-    ["Administrasi sekolah", ""],
+    ["Kondisi manajerial sekolah", "Cara sekolah dikelola: struktur organisasi, peran kepala sekolah, rapat guru"],
+    ["Administrasi sekolah", "Kelengkapan arsip, data siswa, surat-menyurat. Tanyakan ke bagian TU"],
     ["Potensi siswa", "Akademik (karya tulis ilmiah remaja, dll). Non akademik (seni, olah raga, dll)"],
     ["Potensi guru", "Akademik (karya tulis ilmiah guru, dll). Non akademik"],
-    ["Potensi karyawan", ""],
+    ["Potensi karyawan", "Jumlah dan keahlian tenaga kependidikan seperti TU dan petugas lain"],
     ["Interaksi sosial", "Hubungan guru-guru, guru-siswa, siswa-siswa, guru-pegawai tata usaha, dan hubungan sosial secara keseluruhan"],
     ["Tata tertib", "Untuk siswa, guru, pegawai lainnya"],
     ["Bimbingan", "Bimbingan belajar, bimbingan konseling, dll"],
     ["Ekstrakurikuler", "Pramuka, PMI, basket, dll"],
     ["Organisasi sekolah", "OSIS, UKS, dll"],
-    ["Koperasi siswa", ""]
+    ["Koperasi siswa", "Ada atau tidaknya, kegiatannya, dan siapa pengelolanya"]
   ];
   var KBM = [
     ["A. Kegiatan pendahuluan / pembuka", "a", [
@@ -296,20 +296,20 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
 
   views.profil = function () {
     return '<section class="card"><h2>Identitas praktikan</h2><div class="grid">' +
-      field("profil.nama", "Nama mahasiswa", { ph: "Nama lengkap" }) +
-      field("profil.npm", "NPM / NIM", { ph: "mis. 210109566", attrs: 'inputmode="numeric"' }) +
-      field("profil.prodi", "Program studi", { options: [["", "Pilih program studi…"]].concat(PRODI) }) +
-      field("profil.tahun", "Tahun akademik") +
+      field("profil.nama", "Nama mahasiswa", { ph: "Nama lengkap", hint: "Tulis sesuai KTM atau daftar peserta PPL." }) +
+      field("profil.npm", "NPM / NIM", { ph: "mis. 210109566", attrs: 'inputmode="numeric"', hint: "Nomor pokok mahasiswa, lihat di KTM." }) +
+      field("profil.prodi", "Program studi", { options: [["", "Pilih program studi…"]].concat(PRODI), hint: "Pilih prodi kamu. Daftar prodi ada di SK PPL (Lampiran 18)." }) +
+      field("profil.tahun", "Tahun akademik", { hint: "Di buku pedoman tertulis 2026/2027." }) +
       "</div></section>" +
       '<section class="card"><h2>Lokasi dan pembimbing</h2><div class="grid">' +
-      field("profil.lokasi", "Lokasi PPL (madrasah / sekolah)", { ph: "mis. MA Al-Mahrusiyah Pusat", cls: "wide" }) +
-      field("profil.dpl", "Dosen Pembimbing Lapangan (DPL)") +
-      field("profil.pamong", "Guru pamong") +
-      field("profil.kepsek", "Kepala sekolah / madrasah") +
-      field("profil.mapel", "Mata pelajaran yang diampu") +
-      field("profil.kelas", "Kelas / fase yang diajar", { ph: "mis. X / Fase E" }) +
-      field("profil.mulai", "Mulai PPL", { type: "date" }) +
-      field("profil.selesai", "Selesai PPL", { type: "date" }) +
+      field("profil.lokasi", "Lokasi PPL (madrasah / sekolah)", { ph: "mis. MA Al-Mahrusiyah Pusat", cls: "wide", hint: "Nama tempat kamu ditempatkan. Cocokkan dengan daftar lokasi PPL di SK (Lampiran 18) atau surat penempatan." }) +
+      field("profil.dpl", "Dosen Pembimbing Lapangan (DPL)", { hint: "Dosen yang membimbing kamu. Namanya ada di SK daftar DPL (Lampiran 18)." }) +
+      field("profil.pamong", "Guru pamong", { hint: "Guru di sekolah yang mendampingi kamu mengajar." }) +
+      field("profil.kepsek", "Kepala sekolah / madrasah", { hint: "Dipakai di lembar persetujuan laporan (Lampiran 2)." }) +
+      field("profil.mapel", "Mata pelajaran yang diampu", { hint: "Mata pelajaran yang kamu ajar selama PPL." }) +
+      field("profil.kelas", "Kelas / fase yang diajar", { ph: "mis. X / Fase E", hint: "Kelas yang kamu pegang. Tanya guru pamong kalau belum tahu fasenya." }) +
+      field("profil.mulai", "Mulai PPL", { type: "date", hint: "Hari pertama kamu hadir di sekolah." }) +
+      field("profil.selesai", "Selesai PPL", { type: "date", hint: "Hari terakhir PPL di sekolah." }) +
       "</div></section>";
   };
 
@@ -321,14 +321,14 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       return '<div class="wide"><h3 style="margin:6px 0 10px;font-size:15px">' + esc(g[0]) + "</h3><div class=\"grid\">" +
         g[2].map(function (q, i) { return field("observasi.kbm." + g[1] + i, (i + 1) + ". " + esc(q), { ta: true, rows: 2, cls: "wide" }); }).join("") + "</div></div>";
     }).join("");
-    return '<p class="note">Isi catatan hasil observasi sebelum mengajar. Isian mengikuti format Lampiran 4 pada buku pedoman.</p>' +
+    return '<p class="note">Isi dari hasil pengamatan langsung dan tanya jawab dengan guru atau TU, sebelum kamu mulai mengajar. Tulis fakta yang kamu lihat, bukan penilaian pribadi. Format mengikuti Lampiran 4 pada buku pedoman.</p>' +
       '<section class="card"><h2>Kondisi sekolah<span class="src">Lampiran 4 · bagian 1</span></h2><div class="grid">' +
-      field("observasi.tgl", "Tanggal observasi", { type: "date" }) + "<div></div>" + kon + "</div></section>" +
-      '<section class="card"><h2>Lembar observasi kegiatan belajar mengajar<span class="src">Lampiran 4 · bagian 3</span></h2>' +
-      '<div class="grid">' + field("observasi.kbmKelas", "Kelas") + field("observasi.kbmJam", "Jam pelajaran") +
-      field("observasi.kbmMapel", "Mata pelajaran") + field("observasi.kbmTgl", "Hari / tanggal", { type: "date" }) + "</div>" +
+      field("observasi.tgl", "Tanggal observasi", { type: "date", hint: "Hari kamu keliling dan mengamati sekolah." }) + "<div></div>" + kon + "</div></section>" +
+      '<section class="card"><h2>Lembar observasi kegiatan belajar mengajar<span class="src">Lampiran 4 · bagian 3</span></h2><p class="note">Isi saat kamu duduk mengamati satu pertemuan guru pamong mengajar. Pertanyaan yang menanyakan lama kegiatan dijawab dalam menit.</p>' +
+      '<div class="grid">' + field("observasi.kbmKelas", "Kelas", { hint: "Kelas yang kamu amati saat guru mengajar." }) + field("observasi.kbmJam", "Jam pelajaran", { hint: "Mis. jam ke-3 dan 4, atau 08.00 sampai 09.10." }) +
+      field("observasi.kbmMapel", "Mata pelajaran", { hint: "Pelajaran yang sedang diamati." }) + field("observasi.kbmTgl", "Hari / tanggal", { type: "date", hint: "Hari pengamatan." }) + "</div>" +
       kbm +
-      '<div class="grid">' + field("observasi.kesan", "Kesan umum terhadap kegiatan belajar-mengajar yang diamati", { ta: true, rows: 4, cls: "wide" }) + "</div></section>";
+      '<div class="grid">' + field("observasi.kesan", "Kesan umum terhadap kegiatan belajar-mengajar yang diamati", { ta: true, rows: 4, cls: "wide", hint: "Rangkum pendapat kamu: apa yang sudah baik dan apa yang bisa kamu tiru atau perbaiki." }) + "</div></section>";
   };
 
   function kartu(key, title, src, who) {
@@ -336,15 +336,15 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     for (var i = 0; i < 10; i++) {
       var b = "bimbingan." + key + "." + i;
       rows += '<div class="rw"><span class="no">' + (i + 1) + "</span>" +
-        '<input type="date" aria-label="Tanggal bimbingan ' + (i + 1) + '" data-k="' + b + '.tgl" value="' + esc(getp(b + ".tgl")) + '">' +
-        '<input type="text" aria-label="Materi bimbingan ' + (i + 1) + '" data-k="' + b + '.materi" placeholder="Materi bimbingan" value="' + esc(getp(b + ".materi")) + '">' +
+         '<input type="date" title="Tanggal bimbingan" aria-label="Tanggal bimbingan ' + (i + 1) + '" data-k="' + b + '.tgl" value="' + esc(getp(b + ".tgl")) + '">' +
+         '<input type="text" aria-label="Materi bimbingan ' + (i + 1) + '" data-k="' + b + '.materi" placeholder="mis. penyusunan RPP, evaluasi mengajar" value="' + esc(getp(b + ".materi")) + '">' +
         '<label class="chk"><input type="checkbox" data-k="' + b + '.ttd"' + (getp(b + ".ttd") ? " checked" : "") + "><span>TTD " + who + "</span></label></div>";
     }
     return '<section class="card"><h2>' + title + '<span class="src">' + src + "</span></h2>" +
       '<div class="card-rows"><div class="hd"><span>No</span><span>Tanggal</span><span>Materi bimbingan</span><span>Tanda tangan</span></div>' + rows + "</div></section>";
   }
   views.bimbingan = function () {
-    return '<p class="note">Centang kolom tanda tangan setelah kartu fisik ditandatangani. Dua kartu, masing-masing 10 kali bimbingan.</p>' +
+    return '<p class="note">Salin dari kartu bimbingan fisik: tanggal kamu bertemu dan hal yang dibahas. Dosen pembimbing dan guru pamong masing-masing punya satu kartu dengan 10 baris. Centang kolom tanda tangan setelah kartu fisik ditandatangani.</p>' +
       kartu("dpl", "Bimbingan dengan dosen pembimbing", "Lampiran 16", "DPL") +
       kartu("pamong", "Bimbingan dengan guru pamong", "Lampiran 17", "pamong");
   };
@@ -354,26 +354,26 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     var head = "Pertemuan " + (it.ke || i + 1) + (it.mapel ? " · " + it.mapel : "") + (it.tgl ? " · " + it.tgl : "");
     return '<details class="ent"' + (i === S.rpp.items.length - 1 ? " open" : "") + "><summary>" + esc(head) + '</summary><div class="body">' +
       '<div class="grid">' +
-      field(p + "ke", "Pertemuan ke-", { type: "number", attrs: 'min="1" inputmode="numeric"' }) +
-      field(p + "tgl", "Tanggal", { type: "date" }) +
-      field(p + "mapel", "Mata pelajaran") +
-      field(p + "kelas", "Kelas / fase") +
-      field(p + "materi", "Materi pokok", { cls: "wide" }) +
-      field(p + "waktu", "Alokasi waktu", { ph: "mis. 2 JP x 35 menit" }) +
+      field(p + "ke", "Pertemuan ke-", { type: "number", attrs: 'min="1" inputmode="numeric"', hint: "Urutan kamu mengajar di kelas ini: 1, 2, 3, dst." }) +
+      field(p + "tgl", "Tanggal", { type: "date", hint: "Hari kamu mengajar." }) +
+      field(p + "mapel", "Mata pelajaran", { hint: "Pelajaran yang kamu ajar." }) +
+      field(p + "kelas", "Kelas / fase", { hint: "Kelas yang kamu ajar hari itu." }) +
+      field(p + "materi", "Materi pokok", { cls: "wide", hint: "Topik pelajaran. Ambil dari modul ajar atau pembagian materi dari guru pamong." }) +
+      field(p + "waktu", "Alokasi waktu", { ph: "mis. 2 JP x 35 menit", hint: "Lihat jadwal pelajaran. Mis. 2 JP x 35 menit." }) +
       "</div>" +
-      '<div class="sep">' + check(p + "p1", "Berkesadaran") + check(p + "p2", "Bermakna") + check(p + "p3", "Menggembirakan") + "</div>" +
-      field(p + "cp", "Capaian dan tujuan pembelajaran", { ta: true, rows: 3 }) +
-      field(p + "awal", "Kegiatan pendahuluan", { ta: true, rows: 4 }) +
-      field(p + "inti", "Kegiatan inti", { ta: true, rows: 6 }) +
-      field(p + "akhir", "Kegiatan penutup", { ta: true, rows: 4 }) +
-      field(p + "asesmen", "Asesmen (awal, formatif, sumatif)", { ta: true, rows: 3 }) +
-      field(p + "refleksi", "Refleksi dan catatan setelah mengajar", { ta: true, rows: 3 }) +
+      '<p class="note" style="margin:0 0 -6px">Prinsip pembelajaran yang muncul di kegiatanmu (centang yang sesuai):</p><div class="sep">' + check(p + "p1", "Berkesadaran") + check(p + "p2", "Bermakna") + check(p + "p3", "Menggembirakan") + "</div>" +
+      field(p + "cp", "Capaian dan tujuan pembelajaran", { ta: true, rows: 3, hint: "Apa yang harus bisa dilakukan siswa setelah pelajaran. Ambil dari modul ajar atau tanya guru pamong." }) +
+      field(p + "awal", "Kegiatan pendahuluan", { ta: true, rows: 4, hint: "Pembukaan: salam, doa, cek kehadiran, apersepsi, pertanyaan pemantik, penyampaian tujuan." }) +
+      field(p + "inti", "Kegiatan inti", { ta: true, rows: 6, hint: "Langkah-langkah pembelajaran yang kamu lakukan, berurutan: apa yang dikerjakan guru dan siswa." }) +
+      field(p + "akhir", "Kegiatan penutup", { ta: true, rows: 4, hint: "Kesimpulan, refleksi siswa, umpan balik, doa, info pertemuan berikutnya." }) +
+      field(p + "asesmen", "Asesmen (awal, formatif, sumatif)", { ta: true, rows: 3, hint: "Cara kamu menilai siswa: tanya jawab awal, observasi, kuis, tugas, atau tes." }) +
+      field(p + "refleksi", "Refleksi dan catatan setelah mengajar", { ta: true, rows: 3, hint: "Apa yang berjalan baik, apa yang sulit, dan masukan dari guru pamong." }) +
       '<div><button type="button" class="btn danger" data-act="delrpp" data-i="' + i + '">Hapus pertemuan ini</button></div>' +
       "</div></details>";
   }
   views.jurnal = function () {
     var items = S.rpp.items;
-    return '<p class="note">Satu entri untuk setiap pertemuan mengajar. Susunan mengikuti contoh RPP pembelajaran mendalam di buku pedoman: identifikasi, capaian dan tujuan, kegiatan awal, inti, penutup, serta asesmen.</p>' +
+    return '<p class="note">Buat satu entri tiap kali kamu mengajar. Isi dari RPP atau modul ajar yang kamu susun bersama guru pamong. Susunannya mengikuti contoh RPP pembelajaran mendalam di buku pedoman. Laporan mensyaratkan dokumentasi minimal 3 pertemuan.</p>' +
       '<section class="card"><h2>Pertemuan mengajar <span class="src">' + items.length + " entri</span></h2>" +
       (items.length ? items.map(rppEntry).join("") : '<div class="empty">Belum ada pertemuan. Tambahkan setelah RPP pertama disusun.</div>') +
       '<div><button type="button" class="btn" data-act="addrpp">Tambah pertemuan</button></div></section>';
@@ -389,17 +389,17 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     var nh = NH_PARTS.map(function (p) {
       return '<div class="score"><span>' + esc(p[1]) + "</span>" + field("nilai.nh." + p[0], "", { type: "number", attrs: 'min="0" max="100" step="any" inputmode="decimal" aria-label="' + esc(p[1]) + '"' }).replace("<span></span>", "") + "</div>";
     }).join("");
-    return '<p class="note">Nilai diberikan oleh guru pamong dan dosen pembimbing. Halaman ini untuk mencatat dan menghitung hasilnya.</p>' +
-      '<section class="card"><h2>Kompetensi kepribadian <span class="src">N3 · Lampiran 5C</span></h2>' + skorList("nilai.n3", N3) +
+    return '<p class="note">Nilai diberikan oleh guru pamong dan dosen pembimbing, bukan diisi sendiri. Pakai halaman ini untuk mencatat skor dari lembar penilaian mereka dan menghitung hasilnya.</p>' +
+      '<section class="card"><h2>Kompetensi kepribadian <span class="src">N3 · Lampiran 5C</span></h2><p class="note">Skor 1 sampai 5 per indikator dari guru pamong: 5 sangat baik, 4 baik, 3 cukup, 2 kurang, 1 sangat kurang. Nilai = total skor dibagi 35, dikali 100.</p>' + skorList("nilai.n3", N3) +
       '<div class="result"><b id="n3v">—</b><span id="n3t" class="note"></span></div></section>' +
-      '<section class="card"><h2>Kompetensi sosial <span class="src">N4 · Lampiran 5D</span></h2>' + skorList("nilai.n4", N4) +
+      '<section class="card"><h2>Kompetensi sosial <span class="src">N4 · Lampiran 5D</span></h2><p class="note">Skala sama seperti di atas, dari guru pamong. Nilai = total skor dibagi 25, dikali 100.</p>' + skorList("nilai.n4", N4) +
       '<div class="result"><b id="n4v">—</b><span id="n4t" class="note"></span></div></section>' +
-      '<section class="card"><h2>Praktik persekolahan <span class="src">N5 · Lampiran 5E</span></h2>' +
+      '<section class="card"><h2>Praktik persekolahan <span class="src">N5 · Lampiran 5E</span></h2><p class="note">Centang kegiatan sekolah yang kamu ikuti (checklist). Nilai akhir diberikan guru pamong: 80 sampai 100 bila semua kegiatan dilaksanakan dengan tertib.</p>' +
       '<div class="ckgrid">' + n5 + "</div>" +
-      '<div class="grid">' + field("nilai.n5", "Nilai akhir (0–100)", { type: "number", attrs: 'min="0" max="100" step="any" inputmode="decimal"' }) + "</div>" +
+      '<div class="grid">' + field("nilai.n5", "Nilai akhir (0–100)", { type: "number", attrs: 'min="0" max="100" step="any" inputmode="decimal"', hint: "Angka dari guru pamong di lembar penilaian N5." }) + "</div>" +
       '<div class="result"><span id="n5t" class="note"></span></div></section>' +
       '<section class="card"><h2>Nilai hasil PPL <span class="src">NH · Lampiran 8</span></h2>' +
-      '<p class="note">NH adalah rata-rata kelima komponen. Daftar komponen mengikuti contoh perhitungan di buku pedoman.</p>' + nh +
+      '<p class="note">NH adalah rata-rata kelima komponen. Isi dengan angka 0 sampai 100 dari lembar penilaian akhir yang diisi DPL (Lampiran 8). Komponen mengikuti contoh perhitungan di buku pedoman.</p>' + nh +
       '<div class="result"><b id="nhv">—</b><span id="nht" class="note"></span></div></section>';
   };
 
@@ -413,7 +413,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     var bab = LAPORAN.map(function (b) {
       return "<div><h3 style=\"margin:0 0 8px;font-size:15px\">" + esc(b[0]) + "</h3><div class=\"ckgrid\" style=\"grid-template-columns:1fr\">" + weighted("lap", b[1], true) + "</div></div>";
     }).join("");
-    return '<p class="note">Centang bagian yang sudah selesai. Bobot diambil dari rubrik penilaian di buku pedoman, total 100 poin untuk masing-masing dokumen.</p>' +
+    return '<p class="note">Centang bagian yang sudah kamu tulis. Ini hanya pengingat kelengkapan. Bobot diambil dari rubrik penilaian di buku pedoman, dan DPL yang memberi nilai sebenarnya. Total 100 poin untuk masing-masing dokumen.</p>' +
       '<section class="card"><h2>Laporan PPL berbasis pembelajaran mendalam <span class="src">Lampiran 6</span></h2>' + bab +
       '<div class="result"><b id="lapv">—</b><span class="note">poin terpenuhi dari 100</span></div></section>' +
       '<section class="card"><h2>Draf artikel <span class="src">Lampiran 7</span></h2><div class="ckgrid" style="grid-template-columns:1fr">' + weighted("art", ARTIKEL, false) + "</div>" +
