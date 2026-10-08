@@ -799,6 +799,16 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
 
   /* ---------- boot ---------- */
   normalize(); render();
-  initStore().then(function () { loaded = true; normalize(); render(); setStatus("ok"); }, function () { loaded = true; render(); setStatus("ok"); });
+  function seed() {
+    var empty = !filled(S.rpp.cp) && !S.rpp.atpRows.length && !S.rpp.items.length && !filled(S.rpp.soal) && !filled(S.rpp.rubrik);
+    if (S.rpp.seeded || !empty) return;
+    S.rpp.cp = CONTOH.cp; S.rpp.atpRows = clone(CONTOH.atpRows); S.rpp.dim = clone(CONTOH.dim); S.rpp.soal = CONTOH.soal; S.rpp.rubrik = CONTOH.rubrik;
+    CONTOH.items.forEach(function (it) { S.rpp.items.push(clone(it)); });
+    S.rpp.seeded = true;
+    if (!filled(S.profil.mapel)) S.profil.mapel = "Al-Qur'an Hadis";
+    if (!filled(S.profil.kelas)) S.profil.kelas = "IX / Fase D";
+    touch("rpp"); touch("profil");
+  }
+  initStore().then(function () { loaded = true; normalize(); seed(); render(); setStatus("ok"); }, function () { loaded = true; render(); setStatus("ok"); });
 })();
 </script>
