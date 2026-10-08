@@ -133,7 +133,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
 
   /* ---------- state ---------- */
   var DEF = function () {
-    return { profil: { tahun: "2026/2027" }, observasi: {}, bimbingan: { dpl: [], pamong: [] }, rpp: { items: [] }, nilai: {}, buku: { items: [] } };
+    return { profil: { tahun: "2026/2027", jamMulai: "08:25", jamSelesai: "09:05" }, observasi: {}, bimbingan: { dpl: [], pamong: [] }, rpp: { items: [] }, nilai: {}, buku: { items: [] } };
   };
   var SECTIONS = ["profil", "observasi", "bimbingan", "rpp", "nilai", "buku"];
   var S = DEF();
@@ -265,6 +265,8 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     if (!Array.isArray(S.rpp.atpRows)) S.rpp.atpRows = [];
     if (!S.buku || !Array.isArray(S.buku.items)) S.buku = { items: [] };
     if (!S.profil.tahun) S.profil.tahun = "2026/2027";
+    if (!S.profil.jamMulai) S.profil.jamMulai = "08:25";
+    if (!S.profil.jamSelesai) S.profil.jamSelesai = "09:05";
   }
 
   async function initStore() {
@@ -308,6 +310,8 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       field("profil.kepsek", "Kepala sekolah / madrasah", { hint: "Dipakai di lembar persetujuan laporan (Lampiran 2)." }) +
       field("profil.mapel", "Mata pelajaran yang diampu", { hint: "Mata pelajaran yang kamu ajar selama PPL." }) +
       field("profil.kelas", "Kelas / fase yang diajar", { ph: "mis. X / Fase E", hint: "Kelas yang kamu pegang. Tanya guru pamong kalau belum tahu fasenya." }) +
+      field("profil.jamMulai", "Jam mengajar mulai", { type: "time", hint: "Dipakai sebagai jam default di RPP baru." }) +
+      field("profil.jamSelesai", "Jam mengajar selesai", { type: "time" }) +
       field("profil.mulai", "Mulai PPL", { type: "date", hint: "Hari pertama kamu hadir di sekolah." }) +
       field("profil.selesai", "Selesai PPL", { type: "date", hint: "Hari terakhir PPL di sekolah." }) +
       "</div></section>";
@@ -373,6 +377,13 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   }
   function tip(title, text) {
     return '<details class="ent"><summary>' + title + '</summary><div class="body"><p class="note" style="margin:0">' + text + "</p></div></details>";
+  }
+  function jamDefault() {
+    var a = /^(\d{2}):(\d{2})$/.exec(S.profil.jamMulai || ""), b = /^(\d{2}):(\d{2})$/.exec(S.profil.jamSelesai || "");
+    if (!a || !b) return "";
+    var d = (+b[1] * 60 + +b[2]) - (+a[1] * 60 + +a[2]);
+    if (d <= 0) return "";
+    return d + " menit, pukul " + a[1] + "." + a[2] + " sampai " + b[1] + "." + b[2];
   }
   function atpRow(r, i) {
     var b = "rpp.atpRows." + i;
@@ -524,7 +535,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     if (t.dataset.go) return go(t.dataset.go === "observasi" || t.dataset.go === "bimbingan" || t.dataset.go === "jurnal" || t.dataset.go === "buku" || t.dataset.go === "laporan" || t.dataset.go === "profil" ? t.dataset.go : "ringkasan");
     var act = t.dataset.act;
     if (act === "addrpp") {
-      S.rpp.items.push({ ke: String(S.rpp.items.length + 1) }); touch("rpp"); render();
+      S.rpp.items.push({ ke: String(S.rpp.items.length + 1), waktu: jamDefault() }); touch("rpp"); render();
       var ds = document.querySelectorAll("details.ent"); if (ds.length) ds[ds.length - 1].scrollIntoView({ block: "start" });
     } else if (act === "delrpp") {
       if (!t.hasAttribute("data-armed")) {
@@ -660,6 +671,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       kv("Nama", P.nama); kv("NPM", P.npm); kv("Program Studi", P.prodi); kv("Lokasi PPL", P.lokasi);
       kv("Dosen Pembimbing", P.dpl); kv("Guru Pamong", P.pamong); kv("Kepala Sekolah", P.kepsek);
       kv("Mata Pelajaran", P.mapel); kv("Kelas / Fase", P.kelas);
+      kv("Jam Mengajar", jamDefault());
       kv("Masa PPL", (P.mulai || P.selesai) ? (tgl(P.mulai) || "-") + " s.d. " + (tgl(P.selesai) || "-") : "");
     }
 
