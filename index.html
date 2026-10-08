@@ -144,7 +144,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
 
   var TABS = [
     ["ringkasan", "Ringkasan"], ["profil", "Profil"], ["observasi", "Observasi"],
-    ["bimbingan", "Bimbingan"], ["jurnal", "Jurnal & RPP"], ["buku", "Buku ajar"], ["nilai", "Penilaian"], ["laporan", "Laporan"]
+    ["bimbingan", "Bimbingan"], ["jurnal", "CP, ATP & RPP"], ["buku", "Buku ajar"], ["laporan", "Laporan"]
   ];
   var PRODI = ["Pendidikan Agama Islam (PAI)", "Pendidikan Guru MI (PGMI)", "Pendidikan Islam Anak Usia Dini (PIAUD)",
     "Tadris Matematika", "Tadris Bahasa Inggris", "Tadris Bahasa Arab", "Tadris Bahasa Indonesia"];
@@ -186,15 +186,6 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       "Apa yang dilakukan guru sebelum mengakhiri pelajaran untuk pindah ke pelajaran lain atau istirahat?",
       "Berapa menit bagian penutup ini berlangsung?"]]
   ];
-  var N3 = ["Kewibawaan sebagai pribadi calon guru", "Kearifan dalam mengambil keputusan", "Menjadi contoh dalam bersikap dan berperilaku",
-    "Kesesuaian kata dan tindakan", "Kemampuan mengendalikan diri dalam berbagai situasi dan kondisi", "Kedisiplinan", "Kesopanan dan kelancaran berkomunikasi"];
-  var N4 = ["Kemampuan menyampaikan pendapat", "Kemampuan menerima kritik, saran, dan pendapat orang lain",
-    "Mudah bergaul di kalangan sesama praktikan dan civitas madrasah/sekolah", "Kerja sama dalam kelompok / teman praktikan dan civitas madrasah/sekolah",
-    "Toleransi terhadap keberagaman di madrasah/sekolah"];
-  var N5 = ["Keterlibatan piket guru", "Keterlibatan pengelolaan perpustakaan", "Keterlibatan dalam P5", "Keterlibatan aktivitas administrasi TU", "Keterlibatan aktivitas BK"];
-  var NH_PARTS = [
-    ["pembekalan", "Pembekalan dan laporan observasi"], ["pelaksanaan", "Pelaksanaan PPL (guru pamong)"],
-    ["ujian", "Ujian praktik mengajar"], ["laporan", "Laporan PPL berbasis pembelajaran mendalam"], ["video", "Video PPL (kelompok)"]];
   var LAPORAN = [
     ["Bab I Pendahuluan", [["a1", "Latar belakang", 5], ["a2", "Tujuan PPL", 3], ["a3", "Manfaat PPL", 2]]],
     ["Bab II Pelaksanaan PPL berbasis pembelajaran mendalam", [["b1", "Dokumentasi (foto) praktik mengajar, minimal 3 pertemuan", 10], ["b2", "Laporan pelaksanaan dan evaluasi", 40]]],
@@ -202,9 +193,10 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   ];
   var ARTIKEL = [["Judul dan abstrak", 10], ["Pendahuluan", 15], ["Kajian pustaka dan landasan teori", 15], ["Metode penelitian", 15],
     ["Hasil dan pembahasan", 20], ["Kesimpulan dan implikasi", 10], ["Kebaruan dan kontribusi", 5], ["Tata tulis dan etika penulisan", 10]];
-  var SKALA = [["", "Pilih…"], ["5", "5 · Sangat baik"], ["4", "4 · Baik"], ["3", "3 · Cukup"], ["2", "2 · Kurang"], ["1", "1 · Sangat kurang"]];
+  var DIMENSI = ["Keimanan dan Ketakwaan terhadap Tuhan YME", "Kewargaan", "Penalaran Kritis", "Kreativitas", "Kolaborasi", "Kemandirian", "Kesehatan", "Komunikasi"];
+  var PDFOPT = [["profil", "Identitas praktikan"], ["observasi", "Hasil observasi"], ["bimbingan", "Kartu bimbingan"], ["perangkat", "CP, dimensi profil, dan ATP"], ["rpp", "RPP per pertemuan"], ["asesmen", "Soal dan rubrik asesmen"], ["laporan", "Kelengkapan laporan dan artikel"]];
 
-  var CONTOH = {"cp": "Pada akhir Fase D, peserta didik mampu membaca ayat Al-Qur'an dan hadis pilihan dengan lancar dan benar, mengartikan, menghafal, serta menganalisis kandungannya, kemudian menerapkan nilai-nilainya dalam kehidupan sehari-hari.\n\nFokus Bab III kelas IX: peserta didik memahami dan menerapkan kejujuran dalam muamalah berdasarkan hadis riwayat Baihaqi dari Ibnu Abbas r.a. dan hadis riwayat Tirmidzi dari Hasan bin Ali r.a.\n\nCatatan: rumusan di atas disusun dari isi buku dan Kurikulum Merdeka madrasah. Cocokkan dengan teks CP resmi yang berlaku di madrasah sebelum dikumpulkan.", "atp": "Bab III: Menggapai Keberkahan Hidup dengan Jujur dalam Muamalah (8 JP, 4 pertemuan)\n1. Membaca dan mengartikan hadis riwayat Baihaqi dari Ibnu Abbas r.a. (1 JP).\n2. Menganalisis kandungan hadis tentang kejujuran dalam menakar dan menimbang serta menghubungkannya dengan praktik jual beli (1 JP).\n3. Membaca dan mengartikan hadis riwayat Tirmidzi dari Hasan bin Ali r.a. (1 JP).\n4. Menganalisis kandungan hadis, termasuk enam bentuk kejujuran dan hal-hal yang menimbulkan keraguan (1 JP).\n5. Menjelaskan konsep jujur dalam muamalah berdasarkan Q.S. at-Taubah (9): 119 dan Q.S. an-Nisa (4): 29, aspek adabiyah dan madaniyah, serta etika muamalah, dan merumuskan transaksi online yang jujur (2 JP).\n6. Menghafal kedua hadis beserta artinya (1 JP, pertemuan 4).\n7. Menyajikan laporan pengamatan praktik jual beli dan merefleksikan sikap jujur (1 JP, pertemuan 4).\n\nDimensi Profil Lulusan yang dikembangkan: Keimanan dan Ketakwaan terhadap Tuhan YME, Penalaran Kritis, Kolaborasi, dan Komunikasi.", "soal": "A. Pilihan ganda (10 soal, skor 4 per soal benar, maksimum 40)\n1. Hadis riwayat Baihaqi dari Ibnu Abbas r.a. berisi peringatan keras kepada ....\nA. para petani   B. para pedagang   C. para pelajar   D. para pemimpin\n2. Dua hal yang membinasakan umat terdahulu menurut hadis tersebut adalah ....\nA. harta dan tahta   B. takaran dan timbangan   C. ilmu dan amal   D. ucapan dan tulisan\n3. Aspek muamalah yang menyangkut adab atau akhlak, seperti kejujuran dan toleransi, disebut ....\nA. adabiyah   B. madaniyah   C. ubudiyah   D. ijtimaiyah\n4. Perintah menyempurnakan takaran dan timbangan juga terdapat dalam Q.S. ....\nA. al-Isra' (17): 35   B. al-Ikhlas (112): 1   C. al-Fatihah (1): 5   D. al-Kautsar (108): 2\n5. Kecurangan dalam menakar dan menimbang didorong oleh sifat ....\nA. dermawan   B. sabar   C. tamak   D. pemaaf\n6. Menurut hadis riwayat Tirmidzi dari Hasan bin Ali r.a., kejujuran membawa kepada ....\nA. keraguan   B. ketenangan   C. kesombongan   D. kerugian\n7. Berikut yang bukan bentuk kejujuran menurut para ulama adalah ....\nA. jujur berucap   B. jujur berbuat   C. jujur bermuamalat   D. jujur berpakaian\n8. Jujur dalam muamalah adalah kesesuaian antara ....\nA. pikiran, ucapan, dan tindakan   B. harta, pangkat, dan jabatan   C. ilmu, usia, dan pengalaman   D. janji, hadiah, dan pujian\n9. Contoh kejujuran dalam muamalah adalah ....\nA. menyebarkan berita sebelum diperiksa   B. menyampaikan kesaksian sesuai fakta   C. mengurangi timbangan sedikit   D. meminjam barang tanpa izin\n10. Seorang penjual online memasang foto barang yang tidak sesuai dengan aslinya. Tindakan ini ....\nA. bertentangan dengan pesan hadis tentang kejujuran dalam muamalah   B. boleh karena hanya promosi   C. wajar selama barang laku   D. tidak berkaitan dengan hadis\n\nKunci pilihan ganda: 1 B, 2 B, 3 A, 4 A, 5 C, 6 B, 7 D, 8 A, 9 B, 10 A.\n\nB. Uraian (4 soal, skor maksimum 15 per soal, total 60)\n11. Jelaskan kandungan hadis riwayat Baihaqi dari Ibnu Abbas r.a.!\nKunci: peringatan keras kepada pedagang agar menyempurnakan takaran dan timbangan; umat terdahulu binasa karena berlaku curang; kejujuran diperlukan agar tercipta keadilan.\n12. Sebutkan tiga bentuk kejujuran menurut para ulama dan contohnya di sekolah!\nKunci: dari enam bentuk (berucap, berbuat, bermuamalat, bertekad, berniat, berjanji), pilih tiga dengan contoh yang sesuai, misalnya tidak menyontek (berbuat) dan menepati janji kelompok (berjanji).\n13. Sebutkan dua bentuk ketidakjujuran dalam jual beli online dan solusinya agar sesuai dengan hadis!\nKunci: mengobral janji lalu barang tidak dikirim; foto atau tulisan tidak sesuai kenyataan. Solusi: memberi informasi apa adanya, menepati janji, tidak menyembunyikan cacat barang.\n14. Hubungkan jujur dalam muamalah dengan keberkahan berdasarkan hadis tentang dua orang yang berjual beli!\nKunci: jika penjual dan pembeli jujur dan terus terang, keduanya diberkahi dalam jual belinya; jika dusta dan tidak terus terang, keberkahan jual beli dilenyapkan.\n\nNilai = skor PG (maks 40) + skor uraian (maks 60).", "rubrik": "1. Setoran hafalan hadis (dari buku): B = kesalahan 3 atau kurang; C = kesalahan 6 atau kurang; K = kesalahan lebih dari 6.\n2. Bacaan hadis dan menyimak: Lancar, Cukup, Kurang.\n3. Laporan pengamatan jual beli (skor 4 sampai 1 tiap aspek): (a) kelengkapan data pengamatan (percakapan, perilaku, barang, takaran atau timbangan); (b) ketepatan mengaitkan dengan kandungan hadis; (c) solusi atas masalah yang ditemukan; (d) presentasi. Nilai = jumlah skor dibagi 16 dikali 100.\n4. Penilaian diri sikap jujur (dari buku): 10 pernyataan dengan skala 1 (tidak pernah), 2 (kadang-kadang), 3 (sering), 4 (selalu).\n5. Jurnal observasi sikap spiritual dan sosial: catatan perilaku, sikap, dan tindak lanjut pada tiap pertemuan.", "items": [{"mapel": "Al-Qur'an Hadis", "kelas": "IX / Fase D", "waktu": "2 JP x 40 menit (80 menit)", "p1": true, "p2": true, "p3": true, "tgl": "", "refleksi": "", "ke": "1", "materi": "Hadis riwayat Baihaqi dari Ibnu Abbas r.a.: jujur dalam menakar dan menimbang (buku hlm 47 sampai 49)", "cp": "Tujuan:\n1. Membaca hadis riwayat Baihaqi dari Ibnu Abbas r.a. dengan lancar dan benar.\n2. Mengartikan hadis tersebut dengan benar.\n3. Menganalisis kandungannya tentang kejujuran dalam menakar dan menimbang serta menghubungkannya dengan praktik jual beli.", "awal": "Pendahuluan (10 menit)\n- Salam, doa, dan tadarus singkat.\n- Guru menampilkan gambar timbangan dan suasana pasar. Pertanyaan pemantik: Pernahkah kamu merasa dicurangi saat membeli sesuatu? Bagaimana rasanya?\n- Guru menyampaikan tujuan dan alur pembelajaran.", "inti": "Memahami (25 menit): guru membacakan hadis, peserta didik menirukan (talaqqi) lalu membaca berpasangan. Guru menjelaskan arti kata: wahai para pedagang, sungguh kalian menguasai urusan, umat terdahulu, takaran dan timbangan. Guru menjelaskan kandungan: peringatan keras kepada pedagang agar menyempurnakan takaran dan timbangan supaya tidak binasa seperti umat terdahulu, dan perintah serupa dalam Q.S. al-Isra' (17): 35.\nMengaplikasi (30 menit): kelompok 3 sampai 5 orang (ketua, sekretaris, juru bicara) berdiskusi: bentuk kejujuran saat menakar dan menimbang, kisah umat terdahulu yang binasa karena curang, perbedaan takaran dan timbangan beserta alatnya. Kelompok mempresentasikan hasilnya, kelompok lain menyimak dan menilai bacaan.\nMerefleksikan (10 menit): peserta didik menulis aksi tindak lanjut: satu perilaku jujur beserta keutamaannya dan satu perilaku tidak jujur beserta kerugiannya.", "akhir": "Penutup (5 menit)\n- Kesimpulan bersama dan penguatan guru.\n- Doa dan salam. Guru meminta peserta didik mengamati satu transaksi jual beli (offline atau online) untuk bahan proyek.", "asesmen": "Formatif: penilaian bacaan hadis (lancar, cukup, kurang), observasi diskusi kelompok, dan jurnal refleksi."}, {"mapel": "Al-Qur'an Hadis", "kelas": "IX / Fase D", "waktu": "2 JP x 40 menit (80 menit)", "p1": true, "p2": true, "p3": true, "tgl": "", "refleksi": "", "ke": "2", "materi": "Hadis riwayat Tirmidzi dari Hasan bin Ali r.a.: tinggalkan yang meragukan, kejujuran adalah ketenangan (buku hlm 50 sampai 51)", "cp": "Tujuan:\n1. Membaca hadis riwayat Tirmidzi dari Hasan bin Ali r.a. dengan lancar dan benar.\n2. Mengartikan hadis tersebut dengan benar.\n3. Menganalisis kandungannya, termasuk enam bentuk kejujuran menurut ulama, serta mengidentifikasi hal-hal yang menimbulkan keraguan.", "awal": "Pendahuluan (10 menit)\n- Salam, doa, murajaah hadis pertemuan lalu oleh beberapa peserta didik.\n- Pertanyaan pemantik: Apa yang kamu rasakan saat menyembunyikan kesalahan? Tenang atau gelisah?", "inti": "Memahami (25 menit): talaqqi dan membaca berpasangan. Guru menjelaskan arti: tinggalkan yang meragukanmu kepada yang tidak meragukanmu, karena kejujuran itu ketenangan dan dusta itu keraguan. Kandungan: kejujuran membawa ketenangan, dusta membawa keraguan. Bentuk kejujuran menurut ulama: berucap, berbuat, bermuamalat, bertekad, berniat, dan berjanji.\nMengaplikasi (30 menit): kelompok mengidentifikasi enam bentuk kejujuran beserta contohnya, menunjukkan bentuk ketidakjujuran yang membuat ragu, dan merumuskan arti jujur dalam muamalah. Presentasi dan tanggapan.\nMerefleksikan (10 menit): peserta didik mengisi tabel aksi tindak lanjut: perilaku jujur dan keuntungannya, perilaku tidak jujur dan kerugiannya.", "akhir": "Penutup (5 menit)\n- Kesimpulan dan penguatan guru.\n- Doa dan salam. Guru memberi tahu pertemuan berikutnya tentang konsep jujur dalam muamalah.", "asesmen": "Formatif: penilaian bacaan hadis, lembar menyimak, observasi diskusi, dan tabel aksi tindak lanjut."}, {"mapel": "Al-Qur'an Hadis", "kelas": "IX / Fase D", "waktu": "2 JP x 40 menit (80 menit)", "p1": true, "p2": true, "p3": true, "tgl": "", "refleksi": "", "ke": "3", "materi": "Konsep jujur dalam muamalah: Q.S. at-Taubah (9): 119, Q.S. an-Nisa (4): 29, dan etika muamalah (buku hlm 52 sampai 54)", "cp": "Tujuan:\n1. Menjelaskan pengertian muamalah beserta aspek adabiyah dan madaniyah.\n2. Menjelaskan jujur dalam muamalah dan memberi contohnya dalam kehidupan sehari-hari.\n3. Merumuskan cara bertransaksi, termasuk secara online, yang sesuai dengan kandungan kedua hadis.", "awal": "Pendahuluan (10 menit)\n- Salam, doa, murajaah kedua hadis.\n- Guru membacakan hadis tentang dua orang yang berjual beli: bila jujur dan terus terang diberkahi, bila dusta dan tidak terus terang dilenyapkan keberkahannya. Pertanyaan pemantik: Apa arti berkah menurutmu?", "inti": "Memahami (25 menit): guru menjelaskan Q.S. at-Taubah (9): 119 (bersama orang-orang yang benar) dan Q.S. an-Nisa (4): 29 (perdagangan atas dasar suka sama suka). Guru menjelaskan muamalah dengan dua aspek: adabiyah (adab dan akhlak seperti kejujuran, toleransi, sopan santun) dan madaniyah (kebendaan seperti halal, haram, syubhat). Guru memaparkan contoh jujur dalam muamalah (tidak menyebarkan berita yang belum jelas, menjadi saksi yang adil, jujur menakar dan menimbang, tidak mengambil barang tanpa izin) dan etika muamalah.\nMengaplikasi (30 menit): studi kasus kelompok tentang jual beli online (penjual mengobral janji, barang tak kunjung datang setelah pembayaran, foto tidak sesuai kenyataan). Kelompok merumuskan formula transaksi online yang sesuai hadis, lalu bermain peran penjual dan pembeli yang jujur.\nMerefleksikan (10 menit): peserta didik menulis satu komitmen kejujuran di sekolah dan di rumah.", "akhir": "Penutup (5 menit)\n- Kesimpulan dan penguatan guru.\n- Pengumuman: pertemuan berikutnya berisi setoran hafalan, presentasi laporan pengamatan jual beli, dan tes sumatif. Doa dan salam.", "asesmen": "Formatif: observasi studi kasus dan bermain peran, rumusan formula transaksi online, jurnal observasi sikap."}, {"mapel": "Al-Qur'an Hadis", "kelas": "IX / Fase D", "waktu": "2 JP x 40 menit (80 menit)", "p1": true, "p2": true, "p3": true, "tgl": "", "refleksi": "", "ke": "4", "materi": "Hafalan hadis, presentasi laporan pengamatan jual beli, dan asesmen sumatif Bab III", "cp": "Tujuan:\n1. Menghafal kedua hadis beserta artinya dengan lancar.\n2. Menyajikan laporan singkat hasil pengamatan praktik jual beli offline dan online serta menghubungkannya dengan kandungan hadis.\n3. Menunjukkan pemahaman Bab III melalui tes tertulis.", "awal": "Pendahuluan (5 menit)\n- Salam, doa, dan penjelasan alur kegiatan hari ini.", "inti": "Menghafal dan menyajikan (35 menit): setoran hafalan kedua hadis beserta arti secara bergantian (B: kesalahan 3 atau kurang, C: 6 atau kurang, K: lebih dari 6). Bersamaan dengan itu, kelompok mempresentasikan laporan pengamatan jual beli: percakapan, perilaku, barang yang dijual, takaran atau timbangan, mana yang sesuai dan tidak sesuai etika muamalah beserta solusinya.\nAsesmen sumatif tertulis (30 menit): 10 soal pilihan ganda dan 4 soal uraian (lihat bagian Soal Sumatif).\nMerefleksikan (5 menit): penilaian diri dengan skala 1 sampai 4 pada pernyataan sikap jujur.", "akhir": "Penutup (5 menit)\n- Kesimpulan Bab III, motivasi untuk membiasakan jujur dalam muamalah.\n- Doa dan salam.", "asesmen": "Sumatif: tes tertulis (PG dan uraian), laporan pengamatan jual beli dengan presentasi, setoran hafalan, dan penilaian diri sikap jujur."}]};
+  var CONTOH = {"cp": "Pada akhir Fase D, peserta didik mampu membaca ayat Al-Qur'an dan hadis pilihan dengan lancar dan benar, mengartikan, menghafal, serta menganalisis kandungannya, kemudian menerapkan nilai-nilainya dalam kehidupan sehari-hari.\n\nFokus Bab III kelas IX: peserta didik memahami dan menerapkan kejujuran dalam muamalah berdasarkan hadis riwayat Baihaqi dari Ibnu Abbas r.a. dan hadis riwayat Tirmidzi dari Hasan bin Ali r.a.\n\nCatatan: rumusan di atas disusun dari isi buku dan Kurikulum Merdeka madrasah. Cocokkan dengan teks CP resmi yang berlaku di madrasah sebelum dikumpulkan.", "soal": "A. Pilihan ganda (10 soal, skor 4 per soal benar, maksimum 40)\n1. Hadis riwayat Baihaqi dari Ibnu Abbas r.a. berisi peringatan keras kepada ....\nA. para petani   B. para pedagang   C. para pelajar   D. para pemimpin\n2. Dua hal yang membinasakan umat terdahulu menurut hadis tersebut adalah ....\nA. harta dan tahta   B. takaran dan timbangan   C. ilmu dan amal   D. ucapan dan tulisan\n3. Aspek muamalah yang menyangkut adab atau akhlak, seperti kejujuran dan toleransi, disebut ....\nA. adabiyah   B. madaniyah   C. ubudiyah   D. ijtimaiyah\n4. Perintah menyempurnakan takaran dan timbangan juga terdapat dalam Q.S. ....\nA. al-Isra' (17): 35   B. al-Ikhlas (112): 1   C. al-Fatihah (1): 5   D. al-Kautsar (108): 2\n5. Kecurangan dalam menakar dan menimbang didorong oleh sifat ....\nA. dermawan   B. sabar   C. tamak   D. pemaaf\n6. Menurut hadis riwayat Tirmidzi dari Hasan bin Ali r.a., kejujuran membawa kepada ....\nA. keraguan   B. ketenangan   C. kesombongan   D. kerugian\n7. Berikut yang bukan bentuk kejujuran menurut para ulama adalah ....\nA. jujur berucap   B. jujur berbuat   C. jujur bermuamalat   D. jujur berpakaian\n8. Jujur dalam muamalah adalah kesesuaian antara ....\nA. pikiran, ucapan, dan tindakan   B. harta, pangkat, dan jabatan   C. ilmu, usia, dan pengalaman   D. janji, hadiah, dan pujian\n9. Contoh kejujuran dalam muamalah adalah ....\nA. menyebarkan berita sebelum diperiksa   B. menyampaikan kesaksian sesuai fakta   C. mengurangi timbangan sedikit   D. meminjam barang tanpa izin\n10. Seorang penjual online memasang foto barang yang tidak sesuai dengan aslinya. Tindakan ini ....\nA. bertentangan dengan pesan hadis tentang kejujuran dalam muamalah   B. boleh karena hanya promosi   C. wajar selama barang laku   D. tidak berkaitan dengan hadis\n\nKunci pilihan ganda: 1 B, 2 B, 3 A, 4 A, 5 C, 6 B, 7 D, 8 A, 9 B, 10 A.\n\nB. Uraian (4 soal, skor maksimum 15 per soal, total 60)\n11. Jelaskan kandungan hadis riwayat Baihaqi dari Ibnu Abbas r.a.!\nKunci: peringatan keras kepada pedagang agar menyempurnakan takaran dan timbangan; umat terdahulu binasa karena berlaku curang; kejujuran diperlukan agar tercipta keadilan.\n12. Sebutkan tiga bentuk kejujuran menurut para ulama dan contohnya di sekolah!\nKunci: dari enam bentuk (berucap, berbuat, bermuamalat, bertekad, berniat, berjanji), pilih tiga dengan contoh yang sesuai, misalnya tidak menyontek (berbuat) dan menepati janji kelompok (berjanji).\n13. Sebutkan dua bentuk ketidakjujuran dalam jual beli online dan solusinya agar sesuai dengan hadis!\nKunci: mengobral janji lalu barang tidak dikirim; foto atau tulisan tidak sesuai kenyataan. Solusi: memberi informasi apa adanya, menepati janji, tidak menyembunyikan cacat barang.\n14. Hubungkan jujur dalam muamalah dengan keberkahan berdasarkan hadis tentang dua orang yang berjual beli!\nKunci: jika penjual dan pembeli jujur dan terus terang, keduanya diberkahi dalam jual belinya; jika dusta dan tidak terus terang, keberkahan jual beli dilenyapkan.\n\nNilai = skor PG (maks 40) + skor uraian (maks 60).", "rubrik": "1. Setoran hafalan hadis (dari buku): B = kesalahan 3 atau kurang; C = kesalahan 6 atau kurang; K = kesalahan lebih dari 6.\n2. Bacaan hadis dan menyimak: Lancar, Cukup, Kurang.\n3. Laporan pengamatan jual beli (skor 4 sampai 1 tiap aspek): (a) kelengkapan data pengamatan (percakapan, perilaku, barang, takaran atau timbangan); (b) ketepatan mengaitkan dengan kandungan hadis; (c) solusi atas masalah yang ditemukan; (d) presentasi. Nilai = jumlah skor dibagi 16 dikali 100.\n4. Penilaian diri sikap jujur (dari buku): 10 pernyataan dengan skala 1 (tidak pernah), 2 (kadang-kadang), 3 (sering), 4 (selalu).\n5. Jurnal observasi sikap spiritual dan sosial: catatan perilaku, sikap, dan tindak lanjut pada tiap pertemuan.", "items": [{"mapel": "Al-Qur'an Hadis", "kelas": "IX / Fase D", "waktu": "2 JP x 40 menit (80 menit)", "p1": true, "p2": true, "p3": true, "tgl": "", "refleksi": "", "ke": "1", "materi": "Hadis riwayat Baihaqi dari Ibnu Abbas r.a.: jujur dalam menakar dan menimbang (buku hlm 47 sampai 49)", "cp": "Tujuan:\n1. Membaca hadis riwayat Baihaqi dari Ibnu Abbas r.a. dengan lancar dan benar.\n2. Mengartikan hadis tersebut dengan benar.\n3. Menganalisis kandungannya tentang kejujuran dalam menakar dan menimbang serta menghubungkannya dengan praktik jual beli.", "awal": "Pendahuluan (10 menit)\n- Salam, doa, dan tadarus singkat.\n- Guru menampilkan gambar timbangan dan suasana pasar. Pertanyaan pemantik: Pernahkah kamu merasa dicurangi saat membeli sesuatu? Bagaimana rasanya?\n- Guru menyampaikan tujuan dan alur pembelajaran.", "inti": "Memahami (25 menit): guru membacakan hadis, peserta didik menirukan (talaqqi) lalu membaca berpasangan. Guru menjelaskan arti kata: wahai para pedagang, sungguh kalian menguasai urusan, umat terdahulu, takaran dan timbangan. Guru menjelaskan kandungan: peringatan keras kepada pedagang agar menyempurnakan takaran dan timbangan supaya tidak binasa seperti umat terdahulu, dan perintah serupa dalam Q.S. al-Isra' (17): 35.\nMengaplikasi (30 menit): kelompok 3 sampai 5 orang (ketua, sekretaris, juru bicara) berdiskusi: bentuk kejujuran saat menakar dan menimbang, kisah umat terdahulu yang binasa karena curang, perbedaan takaran dan timbangan beserta alatnya. Kelompok mempresentasikan hasilnya, kelompok lain menyimak dan menilai bacaan.\nMerefleksikan (10 menit): peserta didik menulis aksi tindak lanjut: satu perilaku jujur beserta keutamaannya dan satu perilaku tidak jujur beserta kerugiannya.", "akhir": "Penutup (5 menit)\n- Kesimpulan bersama dan penguatan guru.\n- Doa dan salam. Guru meminta peserta didik mengamati satu transaksi jual beli (offline atau online) untuk bahan proyek.", "asesmen": "Formatif: penilaian bacaan hadis (lancar, cukup, kurang), observasi diskusi kelompok, dan jurnal refleksi."}, {"mapel": "Al-Qur'an Hadis", "kelas": "IX / Fase D", "waktu": "2 JP x 40 menit (80 menit)", "p1": true, "p2": true, "p3": true, "tgl": "", "refleksi": "", "ke": "2", "materi": "Hadis riwayat Tirmidzi dari Hasan bin Ali r.a.: tinggalkan yang meragukan, kejujuran adalah ketenangan (buku hlm 50 sampai 51)", "cp": "Tujuan:\n1. Membaca hadis riwayat Tirmidzi dari Hasan bin Ali r.a. dengan lancar dan benar.\n2. Mengartikan hadis tersebut dengan benar.\n3. Menganalisis kandungannya, termasuk enam bentuk kejujuran menurut ulama, serta mengidentifikasi hal-hal yang menimbulkan keraguan.", "awal": "Pendahuluan (10 menit)\n- Salam, doa, murajaah hadis pertemuan lalu oleh beberapa peserta didik.\n- Pertanyaan pemantik: Apa yang kamu rasakan saat menyembunyikan kesalahan? Tenang atau gelisah?", "inti": "Memahami (25 menit): talaqqi dan membaca berpasangan. Guru menjelaskan arti: tinggalkan yang meragukanmu kepada yang tidak meragukanmu, karena kejujuran itu ketenangan dan dusta itu keraguan. Kandungan: kejujuran membawa ketenangan, dusta membawa keraguan. Bentuk kejujuran menurut ulama: berucap, berbuat, bermuamalat, bertekad, berniat, dan berjanji.\nMengaplikasi (30 menit): kelompok mengidentifikasi enam bentuk kejujuran beserta contohnya, menunjukkan bentuk ketidakjujuran yang membuat ragu, dan merumuskan arti jujur dalam muamalah. Presentasi dan tanggapan.\nMerefleksikan (10 menit): peserta didik mengisi tabel aksi tindak lanjut: perilaku jujur dan keuntungannya, perilaku tidak jujur dan kerugiannya.", "akhir": "Penutup (5 menit)\n- Kesimpulan dan penguatan guru.\n- Doa dan salam. Guru memberi tahu pertemuan berikutnya tentang konsep jujur dalam muamalah.", "asesmen": "Formatif: penilaian bacaan hadis, lembar menyimak, observasi diskusi, dan tabel aksi tindak lanjut."}, {"mapel": "Al-Qur'an Hadis", "kelas": "IX / Fase D", "waktu": "2 JP x 40 menit (80 menit)", "p1": true, "p2": true, "p3": true, "tgl": "", "refleksi": "", "ke": "3", "materi": "Konsep jujur dalam muamalah: Q.S. at-Taubah (9): 119, Q.S. an-Nisa (4): 29, dan etika muamalah (buku hlm 52 sampai 54)", "cp": "Tujuan:\n1. Menjelaskan pengertian muamalah beserta aspek adabiyah dan madaniyah.\n2. Menjelaskan jujur dalam muamalah dan memberi contohnya dalam kehidupan sehari-hari.\n3. Merumuskan cara bertransaksi, termasuk secara online, yang sesuai dengan kandungan kedua hadis.", "awal": "Pendahuluan (10 menit)\n- Salam, doa, murajaah kedua hadis.\n- Guru membacakan hadis tentang dua orang yang berjual beli: bila jujur dan terus terang diberkahi, bila dusta dan tidak terus terang dilenyapkan keberkahannya. Pertanyaan pemantik: Apa arti berkah menurutmu?", "inti": "Memahami (25 menit): guru menjelaskan Q.S. at-Taubah (9): 119 (bersama orang-orang yang benar) dan Q.S. an-Nisa (4): 29 (perdagangan atas dasar suka sama suka). Guru menjelaskan muamalah dengan dua aspek: adabiyah (adab dan akhlak seperti kejujuran, toleransi, sopan santun) dan madaniyah (kebendaan seperti halal, haram, syubhat). Guru memaparkan contoh jujur dalam muamalah (tidak menyebarkan berita yang belum jelas, menjadi saksi yang adil, jujur menakar dan menimbang, tidak mengambil barang tanpa izin) dan etika muamalah.\nMengaplikasi (30 menit): studi kasus kelompok tentang jual beli online (penjual mengobral janji, barang tak kunjung datang setelah pembayaran, foto tidak sesuai kenyataan). Kelompok merumuskan formula transaksi online yang sesuai hadis, lalu bermain peran penjual dan pembeli yang jujur.\nMerefleksikan (10 menit): peserta didik menulis satu komitmen kejujuran di sekolah dan di rumah.", "akhir": "Penutup (5 menit)\n- Kesimpulan dan penguatan guru.\n- Pengumuman: pertemuan berikutnya berisi setoran hafalan, presentasi laporan pengamatan jual beli, dan tes sumatif. Doa dan salam.", "asesmen": "Formatif: observasi studi kasus dan bermain peran, rumusan formula transaksi online, jurnal observasi sikap."}, {"mapel": "Al-Qur'an Hadis", "kelas": "IX / Fase D", "waktu": "2 JP x 40 menit (80 menit)", "p1": true, "p2": true, "p3": true, "tgl": "", "refleksi": "", "ke": "4", "materi": "Hafalan hadis, presentasi laporan pengamatan jual beli, dan asesmen sumatif Bab III", "cp": "Tujuan:\n1. Menghafal kedua hadis beserta artinya dengan lancar.\n2. Menyajikan laporan singkat hasil pengamatan praktik jual beli offline dan online serta menghubungkannya dengan kandungan hadis.\n3. Menunjukkan pemahaman Bab III melalui tes tertulis.", "awal": "Pendahuluan (5 menit)\n- Salam, doa, dan penjelasan alur kegiatan hari ini.", "inti": "Menghafal dan menyajikan (35 menit): setoran hafalan kedua hadis beserta arti secara bergantian (B: kesalahan 3 atau kurang, C: 6 atau kurang, K: lebih dari 6). Bersamaan dengan itu, kelompok mempresentasikan laporan pengamatan jual beli: percakapan, perilaku, barang yang dijual, takaran atau timbangan, mana yang sesuai dan tidak sesuai etika muamalah beserta solusinya.\nAsesmen sumatif tertulis (30 menit): 10 soal pilihan ganda dan 4 soal uraian (lihat bagian Soal Sumatif).\nMerefleksikan (5 menit): penilaian diri dengan skala 1 sampai 4 pada pernyataan sikap jujur.", "akhir": "Penutup (5 menit)\n- Kesimpulan Bab III, motivasi untuk membiasakan jujur dalam muamalah.\n- Doa dan salam.", "asesmen": "Sumatif: tes tertulis (PG dan uraian), laporan pengamatan jual beli dengan presentasi, setoran hafalan, dan penilaian diri sikap jujur."}], "atpRows": [{"tp": "Peserta didik mampu membaca dan mengartikan hadis riwayat Baihaqi dari Ibnu Abbas r.a.", "materi": "Hadis HR. Baihaqi dari Ibnu Abbas (buku hlm 47)", "jp": "1", "ke": "1"}, {"tp": "Peserta didik mampu menganalisis kandungan hadis tentang kejujuran dalam menakar dan menimbang serta menghubungkannya dengan praktik jual beli.", "materi": "Kandungan hadis, Q.S. al-Isra' (17): 35 (buku hlm 48 sampai 49)", "jp": "1", "ke": "1"}, {"tp": "Peserta didik mampu membaca dan mengartikan hadis riwayat Tirmidzi dari Hasan bin Ali r.a.", "materi": "Hadis HR. Tirmidzi dari Hasan bin Ali (buku hlm 50)", "jp": "1", "ke": "2"}, {"tp": "Peserta didik mampu menganalisis kandungan hadis, termasuk enam bentuk kejujuran dan hal-hal yang menimbulkan keraguan.", "materi": "Kandungan hadis (buku hlm 50 sampai 51)", "jp": "1", "ke": "2"}, {"tp": "Peserta didik mampu menjelaskan konsep jujur dalam muamalah dan merumuskan transaksi online yang jujur.", "materi": "Q.S. at-Taubah (9): 119, Q.S. an-Nisa (4): 29, adabiyah dan madaniyah, etika muamalah (buku hlm 52 sampai 54)", "jp": "2", "ke": "3"}, {"tp": "Peserta didik mampu menghafal kedua hadis beserta artinya.", "materi": "Hafalan kedua hadis", "jp": "1", "ke": "4"}, {"tp": "Peserta didik mampu menyajikan laporan pengamatan praktik jual beli dan merefleksikan sikap jujur.", "materi": "Laporan pengamatan jual beli offline dan online", "jp": "1", "ke": "4"}], "dim": [true, false, true, false, true, false, false, true]};
 
   /* ---------- helpers ---------- */
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -270,6 +262,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       while (S.bimbingan[k].length < 10) S.bimbingan[k].push({});
     });
     if (!Array.isArray(S.rpp.items)) S.rpp.items = [];
+    if (!Array.isArray(S.rpp.atpRows)) S.rpp.atpRows = [];
     if (!S.buku || !Array.isArray(S.buku.items)) S.buku = { items: [] };
     if (!S.profil.tahun) S.profil.tahun = "2026/2027";
   }
@@ -378,44 +371,41 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       '<div><button type="button" class="btn danger" data-act="delrpp" data-i="' + i + '">Hapus pertemuan ini</button></div>' +
       "</div></details>";
   }
-  views.jurnal = function () {
-    var items = S.rpp.items;
-    var perangkat = '<section class="card"><h2>CP dan ATP</h2><p class="note">Capaian pembelajaran dan alur tujuan pembelajaran mata pelajaran yang kamu ajar. Salin dari dokumen kurikulum sekolah, atau muat contoh Al-Qur\'an Hadis kelas IX (Bab III, jujur dalam muamalah) lalu ubah sesuai kebutuhan.</p><div class="grid">' +
-      field("rpp.cp", "Capaian pembelajaran (CP)", { ta: true, rows: 5, cls: "wide", hint: "Salin dari dokumen CP resmi untuk fase dan mata pelajaranmu." }) +
-      field("rpp.atp", "Alur tujuan pembelajaran (ATP)", { ta: true, rows: 9, cls: "wide", hint: "Urutan tujuan pembelajaran dari yang paling dasar, lengkap dengan alokasi waktu." }) +
-      field("rpp.soal", "Soal asesmen sumatif dan kunci", { ta: true, rows: 10, cls: "wide", hint: "Soal untuk akhir bab, disusun dari tujuan pembelajaran, lengkap dengan kunci dan pedoman skor." }) +
-      field("rpp.rubrik", "Rubrik dan instrumen penilaian", { ta: true, rows: 6, cls: "wide", hint: "Rubrik hafalan, bacaan, proyek, dan penilaian diri." }) +
-      '</div><div><button type="button" class="btn ghost" data-act="contoh">Muat contoh Bab III Al-Qur\'an Hadis kelas IX</button></div></section>';
-    return perangkat + '<p class="note">Buat satu entri tiap kali kamu mengajar. Isi dari RPP atau modul ajar yang kamu susun bersama guru pamong. Susunannya mengikuti contoh RPP pembelajaran mendalam di buku pedoman. Laporan mensyaratkan dokumentasi minimal 3 pertemuan.</p>' +
-      '<section class="card"><h2>Pertemuan mengajar <span class="src">' + items.length + " entri</span></h2>" +
-      (items.length ? items.map(rppEntry).join("") : '<div class="empty">Belum ada pertemuan. Tambahkan setelah RPP pertama disusun.</div>') +
-      '<div><button type="button" class="btn" data-act="addrpp">Tambah pertemuan</button></div></section>';
-  };
-
-  function skorList(prefix, list) {
-    return list.map(function (t, i) {
-      return '<div class="score"><span>' + (i + 1) + ". " + esc(t) + "</span>" + field(prefix + "." + i, "", { options: SKALA, attrs: 'aria-label="' + esc(t) + '"' }).replace("<span></span>", "") + "</div>";
-    }).join("");
+  function tip(title, text) {
+    return '<details class="ent"><summary>' + title + '</summary><div class="body"><p class="note" style="margin:0">' + text + "</p></div></details>";
   }
-  views.nilai = function () {
-    var n5 = N5.map(function (t, i) { return check("nilai.n5k." + i, esc(t)); }).join("");
-    var nh = NH_PARTS.map(function (p) {
-      return '<div class="score"><span>' + esc(p[1]) + "</span>" + field("nilai.nh." + p[0], "", { type: "number", attrs: 'min="0" max="100" step="any" inputmode="decimal" aria-label="' + esc(p[1]) + '"' }).replace("<span></span>", "") + "</div>";
-    }).join("");
-    return '<p class="note">Nilai diberikan oleh guru pamong dan dosen pembimbing, bukan diisi sendiri. Pakai halaman ini untuk mencatat skor dari lembar penilaian mereka dan menghitung hasilnya.</p>' +
-      '<section class="card"><h2>Kompetensi kepribadian <span class="src">N3 · Lampiran 5C</span></h2><p class="note">Skor 1 sampai 5 per indikator dari guru pamong: 5 sangat baik, 4 baik, 3 cukup, 2 kurang, 1 sangat kurang. Nilai = total skor dibagi 35, dikali 100.</p>' + skorList("nilai.n3", N3) +
-      '<div class="result"><b id="n3v">—</b><span id="n3t" class="note"></span></div></section>' +
-      '<section class="card"><h2>Kompetensi sosial <span class="src">N4 · Lampiran 5D</span></h2><p class="note">Skala sama seperti di atas, dari guru pamong. Nilai = total skor dibagi 25, dikali 100.</p>' + skorList("nilai.n4", N4) +
-      '<div class="result"><b id="n4v">—</b><span id="n4t" class="note"></span></div></section>' +
-      '<section class="card"><h2>Praktik persekolahan <span class="src">N5 · Lampiran 5E</span></h2><p class="note">Centang kegiatan sekolah yang kamu ikuti (checklist). Nilai akhir diberikan guru pamong: 80 sampai 100 bila semua kegiatan dilaksanakan dengan tertib.</p>' +
-      '<div class="ckgrid">' + n5 + "</div>" +
-      '<div class="grid">' + field("nilai.n5", "Nilai akhir (0–100)", { type: "number", attrs: 'min="0" max="100" step="any" inputmode="decimal"', hint: "Angka dari guru pamong di lembar penilaian N5." }) + "</div>" +
-      '<div class="result"><span id="n5t" class="note"></span></div></section>' +
-      '<section class="card"><h2>Nilai hasil PPL <span class="src">NH · Lampiran 8</span></h2>' +
-      '<p class="note">NH adalah rata-rata kelima komponen. Isi dengan angka 0 sampai 100 dari lembar penilaian akhir yang diisi DPL (Lampiran 8). Komponen mengikuti contoh perhitungan di buku pedoman.</p>' + nh +
-      '<div class="result"><b id="nhv">—</b><span id="nht" class="note"></span></div></section>';
+  function atpRow(r, i) {
+    var b = "rpp.atpRows." + i;
+    return '<div class="empty" style="text-align:left;display:flex;flex-direction:column;gap:10px"><div class="grid">' +
+      field(b + ".tp", "Tujuan pembelajaran " + (i + 1), { ta: true, rows: 3, cls: "wide", hint: "Peserta didik mampu + kata kerja + materi." }) +
+      field(b + ".materi", "Materi dan sumber", { hint: "Topik dan halaman buku ajar." }) +
+      field(b + ".jp", "Alokasi (JP)", { type: "number", attrs: 'min="1" inputmode="numeric"' }) +
+      field(b + ".ke", "Diajarkan di pertemuan ke-", { type: "number", attrs: 'min="1" inputmode="numeric"' }) +
+      '</div><div><button type="button" class="btn danger" data-act="delatp" data-i="' + i + '">Hapus tujuan ini</button></div></div>';
+  }
+  views.jurnal = function () {
+    var items = S.rpp.items, rows = S.rpp.atpRows;
+    var jp = rows.reduce(function (a, r) { return a + (num(r.jp) || 0); }, 0);
+    var s1 = '<section class="card"><h2>Langkah 1. Capaian pembelajaran (CP)</h2>' +
+      tip("Panduan menyusun CP", "Ambil dari dokumen CP resmi untuk mata pelajaran dan fase yang kamu ajar, lalu tulis ulang secara ringkas dengan kata-katamu sendiri. Fokuskan pada kemampuan yang ingin dicapai lewat materi yang kamu ajarkan. Jangan memuat kegiatan atau soal.") +
+      '<div class="grid">' + field("rpp.cp", "Capaian pembelajaran", { ta: true, rows: 5, cls: "wide" }) + "</div>" +
+      '<div><div class="note" style="font-weight:600;margin-bottom:6px">Dimensi profil lulusan yang dikembangkan</div><div class="ckgrid">' +
+      DIMENSI.map(function (d, i) { return check("rpp.dim." + i, esc(d)); }).join("") + "</div></div></section>";
+    var s2 = '<section class="card"><h2>Langkah 2. Tujuan dan alur tujuan pembelajaran (ATP) <span class="src">' + rows.length + " tujuan · " + jp + " JP</span></h2>" +
+      tip("Panduan menyusun TP dan ATP", "Rumus tujuan: Peserta didik mampu + kata kerja (membaca, mengartikan, menganalisis, menyajikan, menerapkan) + materinya. Satu tujuan satu kemampuan yang bisa diamati. Urutkan dari yang paling dasar ke yang lebih kompleks, beri alokasi JP, dan tentukan diajarkan di pertemuan ke berapa. Total JP sebaiknya sama dengan jam yang tersedia untuk bab ini.") +
+      (rows.length ? rows.map(atpRow).join("") : '<div class="empty">Belum ada tujuan pembelajaran. Tambahkan tujuan pertama.</div>') +
+      '<div><button type="button" class="btn" data-act="addatp">Tambah tujuan</button></div></section>';
+    var s3 = '<section class="card"><h2>Langkah 3. RPP per pertemuan <span class="src">' + items.length + " entri</span></h2>" +
+      tip("Panduan menyusun RPP", "Buat satu entri untuk setiap pertemuan. Turunkan dari ATP: tujuan di pertemuan itu, lalu kegiatan awal, inti, dan penutup berurutan lengkap dengan menitnya. Laporan mensyaratkan dokumentasi minimal 3 pertemuan.") +
+      (items.length ? items.map(rppEntry).join("") : '<div class="empty">Belum ada pertemuan. Tambahkan setelah ATP tersusun.</div>') +
+      '<div><button type="button" class="btn" data-act="addrpp">Tambah pertemuan</button></div></section>';
+    var s4 = '<section class="card"><h2>Langkah 4. Asesmen</h2>' +
+      tip("Panduan menyusun asesmen", "Bentuk asesmen bebas, sesuai arahan guru pamong: tes tulis, setoran, proyek, atau observasi. Susun soal dari tujuan pembelajaran, sertakan kunci jawaban dan pedoman skor, serta rubrik untuk penilaian non-tes.") +
+      '<div class="grid">' + field("rpp.soal", "Soal dan kunci", { ta: true, rows: 10, cls: "wide" }) + field("rpp.rubrik", "Rubrik dan instrumen penilaian", { ta: true, rows: 6, cls: "wide" }) + "</div></section>";
+    var s5 = '<section class="card"><h2>Butuh gambaran isian?</h2><p class="note">Contoh ini diambil dari Bab III buku Al-Qur\'an Hadis MTs kelas IX (jujur dalam muamalah). Pakai hanya untuk melihat bentuk isiannya, lalu susun milikmu sendiri.</p>' +
+      '<div><button type="button" class="btn ghost" data-act="contoh">Lihat contoh isian Bab III</button></div></section>';
+    return '<p class="note">Susun perangkat ajarmu sendiri di sini, langkah demi langkah. Semua isian tersimpan otomatis dan bisa dicetak per bagian dari tab Ringkasan.</p>' + s1 + s2 + s3 + s4 + s5;
   };
-
 
   function mb(n) { return (n / 1048576).toFixed(1).replace(".", ",") + " MB"; }
   views.buku = function () {
@@ -457,40 +447,13 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   };
 
   /* ---------- computed ---------- */
-  function sumList(prefix, n) {
-    var t = 0, c = 0;
-    for (var i = 0; i < n; i++) { var v = num(getp(prefix + "." + i)); if (v != null) { t += v; c++; } }
-    return { total: t, count: c };
-  }
   function pctWeights(prefix, items, startKey) {
     var t = 0;
     items.forEach(function (r, i) { var key = startKey ? r[0] : i, w = startKey ? r[2] : r[1]; if (getp("nilai." + prefix + "." + key)) t += w; });
     return t;
   }
-  function nhCalc() {
-    var vals = NH_PARTS.map(function (p) { return num(getp("nilai.nh." + p[0])); }).filter(function (v) { return v != null; });
-    if (!vals.length) return null;
-    return { avg: vals.reduce(function (a, b) { return a + b; }, 0) / vals.length, n: vals.length };
-  }
-  function n5Label(v) {
-    if (v == null) return "";
-    if (v >= 80) return "Melaksanakan semua kegiatan persekolahan dengan tertib dan sesuai aturan.";
-    if (v >= 70) return "Melaksanakan semua kegiatan persekolahan dengan kurang tertib.";
-    if (v >= 60) return "Melaksanakan sebagian kegiatan persekolahan.";
-    return "Kurang melaksanakan kegiatan persekolahan.";
-  }
   function setText(id, t) { var el = document.getElementById(id); if (el) el.textContent = t; }
   function refreshComputed() {
-    var a = sumList("nilai.n3", 7);
-    setText("n3v", a.count === 7 ? fmt(a.total / 35 * 100) : "—");
-    setText("n3t", a.count === 7 ? "Total skor " + a.total + " dari 35, dikali 100." : a.count + " dari 7 indikator terisi.");
-    var b = sumList("nilai.n4", 5);
-    setText("n4v", b.count === 5 ? fmt(b.total / 25 * 100) : "—");
-    setText("n4t", b.count === 5 ? "Total skor " + b.total + " dari 25, dikali 100." : b.count + " dari 5 indikator terisi.");
-    setText("n5t", n5Label(num(getp("nilai.n5"))) || "Isi nilai akhir untuk melihat keterangannya.");
-    var h = nhCalc();
-    setText("nhv", h ? fmt(h.avg) : "—");
-    setText("nht", h ? (h.n === 5 ? "Rata-rata dari 5 komponen." : "Sementara, baru " + h.n + " dari 5 komponen terisi.") : "");
     setText("lapv", String(pctWeights("lap", [].concat.apply([], LAPORAN.map(function (b) { return b[1]; })), true)));
     setText("artv", String(pctWeights("art", ARTIKEL, false)));
   }
@@ -504,27 +467,34 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     function ttd(k) { return S.bimbingan[k].filter(function (r) { return r.ttd; }).length; }
     var lap = pctWeights("lap", [].concat.apply([], LAPORAN.map(function (b) { return b[1]; })), true);
     var art = pctWeights("art", ARTIKEL, false);
-    var h = nhCalc();
+    var perangkat = (filled(S.rpp.cp) ? 1 : 0) + (S.rpp.atpRows.length ? 1 : 0) + (filled(S.rpp.soal) || filled(S.rpp.rubrik) ? 1 : 0);
     var rows = [
       ["profil", "Profil dan lokasi PPL", prof, 8, prof + " dari 8 isian"],
       ["observasi", "Observasi kondisi sekolah", ko, KONDISI.length, ko + " dari " + KONDISI.length + " aspek"],
       ["observasi", "Observasi kegiatan belajar-mengajar", kb, kbTot, kb + " dari " + kbTot + " pertanyaan"],
       ["bimbingan", "Kartu bimbingan DPL", cnt("dpl"), 10, cnt("dpl") + " dari 10 sesi dicatat, " + ttd("dpl") + " bertanda tangan"],
       ["bimbingan", "Kartu bimbingan guru pamong", cnt("pamong"), 10, cnt("pamong") + " dari 10 sesi dicatat, " + ttd("pamong") + " bertanda tangan"],
-      ["jurnal", "Jurnal dan RPP pertemuan", S.rpp.items.length, Math.max(3, S.rpp.items.length), S.rpp.items.length + " pertemuan. Laporan mensyaratkan dokumentasi minimal 3 pertemuan."],
+      ["jurnal", "CP, ATP, dan asesmen", perangkat, 3, (filled(S.rpp.cp) ? "CP terisi" : "CP kosong") + ", " + S.rpp.atpRows.length + " tujuan pembelajaran, " + (filled(S.rpp.soal) || filled(S.rpp.rubrik) ? "asesmen terisi" : "asesmen kosong")],
+      ["jurnal", "RPP per pertemuan", S.rpp.items.length, Math.max(3, S.rpp.items.length), S.rpp.items.length + " pertemuan. Laporan mensyaratkan dokumentasi minimal 3 pertemuan."],
       ["buku", "Buku ajar yang diunggah", S.buku.items.length, 1, S.buku.items.length ? S.buku.items.length + " berkas" : "Belum ada. Unggah PDF buku ajar sebagai acuan RPP."],
       ["laporan", "Kelengkapan laporan PPL", lap, 100, lap + " dari 100 poin"],
-      ["laporan", "Kelengkapan draf artikel", art, 100, art + " dari 100 poin"],
-      ["nilai", "Nilai hasil PPL (NH)", h ? h.n : 0, 5, h ? "NH " + fmt(h.avg) + (h.n < 5 ? " (sementara)" : "") : "Belum ada komponen nilai"]
+      ["laporan", "Kelengkapan draf artikel", art, 100, art + " dari 100 poin"]
     ];
+    var opts = PDFOPT.map(function (o) {
+      return '<label class="chk" for="pdfopt_' + o[0] + '"><input id="pdfopt_' + o[0] + '" type="checkbox" checked><span>' + esc(o[1]) + "</span></label>";
+    }).join("");
     return '<section class="card"><h2>Yang sudah dan belum terisi</h2><div>' + rows.map(function (r) {
       var pct = r[3] ? Math.min(100, Math.round(r[2] / r[3] * 100)) : 0;
       return '<button type="button" class="prog" data-go="' + r[0] + '"><span class="pl">' + esc(r[1]) + '</span><span class="pv">' + pct + '%</span><div class="bar"><div style="width:' + pct + '%"></div></div><small>' + esc(r[4]) + "</small></button>";
     }).join("") + "</div></section>" +
-      '<section class="card"><h2>Unduh dan cadangan</h2>' +
-      '<p class="note">Data tersimpan otomatis. PDF memuat semua isian: profil, observasi, kartu bimbingan, jurnal dan RPP, penilaian, serta kelengkapan laporan. Format mengikuti ketentuan laporan di buku pedoman: kertas A4, Times New Roman 12, spasi 1,5, margin kiri 4 cm dan margin atas, kanan, bawah 3 cm. Isi tabel memakai spasi 1. Tulisan non-Latin seperti huruf Arab belum bisa ditampilkan di PDF.</p>' +
-      '<div class="sep"><button type="button" class="btn" data-act="pdf">Unduh PDF</button><button type="button" class="btn ghost" data-act="copy">Salin semua data</button></div>' +
-      '<p class="note" id="pdfMsg" role="status"></p><div id="copyOut"></div></section>';
+      '<section class="card"><h2>Cetak PDF</h2>' +
+      '<p class="note">Centang bagian yang mau dicetak, atau pakai pilihan cepat. Format mengikuti ketentuan laporan di buku pedoman: kertas A4, Times New Roman 12, spasi 1,5, margin kiri 4 cm dan margin atas, kanan, bawah 3 cm. Isi tabel memakai spasi 1. Tulisan non-Latin seperti huruf Arab belum bisa ditampilkan di PDF.</p>' +
+      '<div class="ckgrid">' + opts + "</div>" +
+      '<div class="sep"><button type="button" class="btn ghost" data-act="pdfpreset" data-p="all">Cetak keseluruhan</button><button type="button" class="btn ghost" data-act="pdfpreset" data-p="rpp">RPP saja (CP, ATP, RPP, asesmen)</button></div>' +
+      '<div class="sep"><button type="button" class="btn" data-act="pdf">Unduh PDF</button></div>' +
+      '<p class="note" id="pdfMsg" role="status"></p></section>' +
+      '<section class="card"><h2>Cadangan data</h2><p class="note">Data tersimpan otomatis. Salin sebagai teks bila ingin menyimpan cadangan sendiri.</p>' +
+      '<div><button type="button" class="btn ghost" data-act="copy">Salin semua data</button></div><div id="copyOut"></div></section>';
   };
 
   /* ---------- render + events ---------- */
@@ -551,7 +521,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   document.addEventListener("click", function (e) {
     var t = e.target.closest ? e.target.closest("[data-tab],[data-go],[data-act]") : null; if (!t) return;
     if (t.dataset.tab) return go(t.dataset.tab);
-    if (t.dataset.go) return go(t.dataset.go === "observasi" || t.dataset.go === "bimbingan" || t.dataset.go === "jurnal" || t.dataset.go === "buku" || t.dataset.go === "nilai" || t.dataset.go === "laporan" || t.dataset.go === "profil" ? t.dataset.go : "ringkasan");
+    if (t.dataset.go) return go(t.dataset.go === "observasi" || t.dataset.go === "bimbingan" || t.dataset.go === "jurnal" || t.dataset.go === "buku" || t.dataset.go === "laporan" || t.dataset.go === "profil" ? t.dataset.go : "ringkasan");
     var act = t.dataset.act;
     if (act === "addrpp") {
       S.rpp.items.push({ ke: String(S.rpp.items.length + 1) }); touch("rpp"); render();
@@ -568,16 +538,26 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
         t.setAttribute("data-armed", "1"); t.textContent = "Klik lagi untuk menghapus";
         setTimeout(function () { if (t.isConnected) { t.removeAttribute("data-armed"); t.textContent = "Hapus berkas"; } }, 3000);
       } else { removeBuku(parseInt(t.dataset.i, 10)); }
+    } else if (act === "addatp") {
+      S.rpp.atpRows.push({ ke: "", jp: "" }); touch("rpp"); render();
+    } else if (act === "delatp") {
+      if (!t.hasAttribute("data-armed")) {
+        t.setAttribute("data-armed", "1"); t.textContent = "Klik lagi untuk menghapus";
+        setTimeout(function () { if (t.isConnected) { t.removeAttribute("data-armed"); t.textContent = "Hapus tujuan ini"; } }, 3000);
+      } else { S.rpp.atpRows.splice(parseInt(t.dataset.i, 10), 1); touch("rpp"); render(); }
     } else if (act === "contoh") {
-      var has = filled(S.rpp.cp) || filled(S.rpp.atp) || filled(S.rpp.soal) || filled(S.rpp.rubrik) || S.rpp.items.length;
+      var has = filled(S.rpp.cp) || S.rpp.atpRows.length || filled(S.rpp.soal) || filled(S.rpp.rubrik) || S.rpp.items.length;
       if (has && !t.hasAttribute("data-armed")) {
-        t.setAttribute("data-armed", "1"); t.textContent = "Isi lama akan ditimpa. Klik lagi untuk lanjut";
-        setTimeout(function () { if (t.isConnected) { t.removeAttribute("data-armed"); t.textContent = "Muat contoh Bab III Al-Qur'an Hadis kelas IX"; } }, 4000);
+        t.setAttribute("data-armed", "1"); t.textContent = "Isi yang ada akan ditimpa. Klik lagi untuk lanjut";
+        setTimeout(function () { if (t.isConnected) { t.removeAttribute("data-armed"); t.textContent = "Lihat contoh isian Bab III"; } }, 4000);
       } else {
-        S.rpp.cp = CONTOH.cp; S.rpp.atp = CONTOH.atp; S.rpp.soal = CONTOH.soal; S.rpp.rubrik = CONTOH.rubrik;
+        S.rpp.cp = CONTOH.cp; S.rpp.atpRows = clone(CONTOH.atpRows); S.rpp.dim = clone(CONTOH.dim); S.rpp.soal = CONTOH.soal; S.rpp.rubrik = CONTOH.rubrik;
         CONTOH.items.forEach(function (it) { S.rpp.items.push(clone(it)); });
         touch("rpp"); render();
       }
+    } else if (act === "pdfpreset") {
+      var rppSet = { profil: 1, perangkat: 1, rpp: 1, asesmen: 1 };
+      PDFOPT.forEach(function (o) { var el = document.getElementById("pdfopt_" + o[0]); if (el) el.checked = t.dataset.p === "all" || !!rppSet[o[0]]; });
     } else if (act === "pdf") {
       downloadPdf();
     } else if (act === "copy") {
@@ -600,7 +580,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ""); if (!m) return v || "";
     return parseInt(m[3], 10) + " " + BULAN[parseInt(m[2], 10) - 1] + " " + m[1];
   }
-  function buildPdf() {
+  function buildPdf(o) {
     var J = window.jspdf.jsPDF;
     var doc = new J({ unit: "mm", format: "a4", orientation: "portrait" });
     var LH = 12 * 1.5 / (72 / 25.4), y = MM.T, TL = 12 * 1.15 / (72 / 25.4), PAD = 1.6;
@@ -662,96 +642,97 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       y += 3;
     }
 
-    var P = S.profil;
-    /* judul */
-    h1("BERKAS PRAKTIK PENGALAMAN LAPANGAN (PPL)");
+    var P = S.profil, first = true, SEC = 0, LET = "ABCDEFGH";
+    function sec(title, newPage) {
+      if (newPage && !first) { doc.addPage(); y = MM.T; }
+      first = false;
+      h2(LET.charAt(SEC++) + ". " + title);
+    }
+    var rppOnly = !o.observasi && !o.bimbingan && !o.laporan;
+    h1(rppOnly ? "PERANGKAT PEMBELAJARAN" : "BERKAS PRAKTIK PENGALAMAN LAPANGAN (PPL)");
     line("Fakultas Tarbiyah dan Keguruan", { center: true });
     line("Universitas Islam Tribakti Lirboyo Kediri", { center: true });
     line("Tahun Akademik " + (P.tahun || "2026/2027"), { center: true });
     gap(0.5);
 
-    h2("A. Identitas Praktikan");
-    kv("Nama", P.nama); kv("NPM", P.npm); kv("Program Studi", P.prodi); kv("Lokasi PPL", P.lokasi);
-    kv("Dosen Pembimbing", P.dpl); kv("Guru Pamong", P.pamong); kv("Kepala Sekolah", P.kepsek);
-    kv("Mata Pelajaran", P.mapel); kv("Kelas / Fase", P.kelas);
-    kv("Masa PPL", (P.mulai || P.selesai) ? (tgl(P.mulai) || "-") + " s.d. " + (tgl(P.selesai) || "-") : "");
-
-    /* observasi */
-    h2("B. Hasil Observasi");
-    h3("1. Kondisi Sekolah" + (S.observasi.tgl ? " (" + tgl(S.observasi.tgl) + ")" : ""));
-    KONDISI.forEach(function (r, i) { para((i + 1) + ". " + r[0], getp("observasi.kondisi." + i)); });
-    gap(0.3);
-    h3("2. Observasi Kegiatan Belajar Mengajar");
-    kv("Kelas", S.observasi.kbmKelas); kv("Jam Pelajaran", S.observasi.kbmJam);
-    kv("Mata Pelajaran", S.observasi.kbmMapel); kv("Hari / Tanggal", tgl(S.observasi.kbmTgl));
-    KBM.forEach(function (g) {
-      gap(0.3); line(g[0], { bold: true });
-      g[2].forEach(function (q, i) { line((i + 1) + ". " + q, { indent: 4 }); line(filled(getp("observasi.kbm." + g[1] + i)) ? getp("observasi.kbm." + g[1] + i) : "-", { indent: 8, italic: true }); });
-    });
-    gap(0.3); para("Kesan umum", S.observasi.kesan);
-
-    /* kartu bimbingan */
-    doc.addPage(); y = MM.T;
-    h2("C. Kartu Bimbingan");
-    [["dpl", "1. Bimbingan dengan Dosen Pembimbing", "Tanda tangan DPL"], ["pamong", "2. Bimbingan dengan Guru Pamong", "Tanda tangan guru pamong"]].forEach(function (c) {
-      h3(c[1]); gap(0.2);
-      var rows = S.bimbingan[c[0]].map(function (r, i) { return [String(i + 1), tgl(r.tgl), r.materi || "", r.ttd ? "Sudah" : ""]; });
-      table(["No", "Tanggal", "Materi Bimbingan", c[2]], [10, 32, 62, 36], rows, { minH: 9 });
-    });
-
-    /* jurnal */
-    doc.addPage(); y = MM.T;
-    h2("D. Jurnal dan Rencana Pembelajaran");
-    if (filled(S.rpp.cp)) para("Capaian Pembelajaran (CP)", S.rpp.cp);
-    if (filled(S.rpp.atp)) para("Alur Tujuan Pembelajaran (ATP)", S.rpp.atp);
-    if (filled(S.rpp.soal)) para("Soal Asesmen Sumatif dan Kunci", S.rpp.soal);
-    if (filled(S.rpp.rubrik)) para("Rubrik dan Instrumen Penilaian", S.rpp.rubrik);
-    if (filled(S.rpp.cp) || filled(S.rpp.atp) || filled(S.rpp.soal) || filled(S.rpp.rubrik)) gap(0.5);
-    if (!S.rpp.items.length) line("Belum ada pertemuan yang dicatat.", { italic: true });
-    S.rpp.items.forEach(function (it, i) {
-      h3("Pertemuan ke-" + (it.ke || i + 1));
-      kv("Tanggal", tgl(it.tgl)); kv("Mata Pelajaran", it.mapel); kv("Kelas / Fase", it.kelas);
-      kv("Materi Pokok", it.materi); kv("Alokasi Waktu", it.waktu);
-      kv("Prinsip", [it.p1 ? "Berkesadaran" : "", it.p2 ? "Bermakna" : "", it.p3 ? "Menggembirakan" : ""].filter(Boolean).join(", "));
-      para("Capaian dan Tujuan Pembelajaran", it.cp); para("Kegiatan Pendahuluan", it.awal); para("Kegiatan Inti", it.inti);
-      para("Kegiatan Penutup", it.akhir); para("Asesmen", it.asesmen); para("Refleksi", it.refleksi);
-      gap(0.5);
-    });
-
-    /* penilaian */
-    doc.addPage(); y = MM.T;
-    h2("E. Penilaian");
-    function skor(title, list, prefix, div) {
-      h3(title); gap(0.2);
-      var sc = sumList(prefix, list.length);
-      var rows = list.map(function (t, i) { var v = getp(prefix + "." + i); return [String(i + 1), t, filled(v) ? String(v) : ""]; });
-      rows.push(["", "Nilai (total skor / " + div + " x 100)", sc.count === list.length ? fmt(sc.total / div * 100) : "-"]);
-      table(["No", "Indikator", "Skor"], [10, 106, 24], rows, { boldLast: true, minH: 8 });
+    if (o.profil) {
+      sec("Identitas Praktikan", false);
+      kv("Nama", P.nama); kv("NPM", P.npm); kv("Program Studi", P.prodi); kv("Lokasi PPL", P.lokasi);
+      kv("Dosen Pembimbing", P.dpl); kv("Guru Pamong", P.pamong); kv("Kepala Sekolah", P.kepsek);
+      kv("Mata Pelajaran", P.mapel); kv("Kelas / Fase", P.kelas);
+      kv("Masa PPL", (P.mulai || P.selesai) ? (tgl(P.mulai) || "-") + " s.d. " + (tgl(P.selesai) || "-") : "");
     }
-    skor("1. Kompetensi Kepribadian (N3)", N3, "nilai.n3", 35);
-    skor("2. Kompetensi Sosial (N4)", N4, "nilai.n4", 25);
-    h3("3. Praktik Persekolahan (N5)"); gap(0.2);
-    var r5 = N5.map(function (t, i) { return [String(i + 1), t, getp("nilai.n5k." + i) ? "Ya" : "Belum"]; });
-    r5.push(["", "Nilai akhir", filled(getp("nilai.n5")) ? String(getp("nilai.n5")) : "-"]);
-    table(["No", "Kegiatan Persekolahan", "Checklist"], [10, 106, 24], r5, { boldLast: true, minH: 8 });
-    var k5 = n5Label(num(getp("nilai.n5"))); if (k5) { line("Keterangan: " + k5, { indent: 0 }); gap(0.3); }
-    h3("4. Nilai Hasil PPL (NH)"); gap(0.2);
-    var nh = nhCalc();
-    var rn = NH_PARTS.map(function (q, i) { var v = getp("nilai.nh." + q[0]); return [String(i + 1), q[1], filled(v) ? String(v) : "-"]; });
-    rn.push(["", "Nilai Hasil (rata-rata)" + (nh && nh.n < 5 ? ", sementara" : ""), nh ? fmt(nh.avg) : "-"]);
-    table(["No", "Komponen", "Nilai"], [10, 106, 24], rn, { boldLast: true, minH: 8 });
 
-    /* kelengkapan */
-    h2("F. Kelengkapan Dokumen");
-    h3("1. Laporan PPL"); gap(0.2);
-    var rl = [];
-    LAPORAN.forEach(function (b) { b[1].forEach(function (r) { rl.push([b[0] === LAPORAN[0][0] ? "Bab I" : b[0].indexOf("Bab II ") === 0 ? "Bab II" : "Bab III", r[1], String(r[2]), getp("nilai.lap." + r[0]) ? "Sudah" : "Belum"]); }); });
-    table(["Bab", "Bagian", "Poin", "Status"], [20, 80, 16, 24], rl, { minH: 8 });
-    line("Poin terpenuhi: " + pctWeights("lap", [].concat.apply([], LAPORAN.map(function (b) { return b[1]; })), true) + " dari 100", { bold: true }); gap(0.3);
-    h3("2. Draf Artikel"); gap(0.2);
-    var ra = ARTIKEL.map(function (r, i) { return [String(i + 1), r[0], String(r[1]), getp("nilai.art." + i) ? "Sudah" : "Belum"]; });
-    table(["No", "Aspek", "Poin", "Status"], [10, 90, 16, 24], ra, { minH: 8 });
-    line("Poin terpenuhi: " + pctWeights("art", ARTIKEL, false) + " dari 100", { bold: true });
+    if (o.observasi) {
+      sec("Hasil Observasi", false);
+      h3("1. Kondisi Sekolah" + (S.observasi.tgl ? " (" + tgl(S.observasi.tgl) + ")" : ""));
+      KONDISI.forEach(function (r, i) { para((i + 1) + ". " + r[0], getp("observasi.kondisi." + i)); });
+      gap(0.3);
+      h3("2. Observasi Kegiatan Belajar Mengajar");
+      kv("Kelas", S.observasi.kbmKelas); kv("Jam Pelajaran", S.observasi.kbmJam);
+      kv("Mata Pelajaran", S.observasi.kbmMapel); kv("Hari / Tanggal", tgl(S.observasi.kbmTgl));
+      KBM.forEach(function (g) {
+        gap(0.3); line(g[0], { bold: true });
+        g[2].forEach(function (q, i) { line((i + 1) + ". " + q, { indent: 4 }); line(filled(getp("observasi.kbm." + g[1] + i)) ? getp("observasi.kbm." + g[1] + i) : "-", { indent: 8, italic: true }); });
+      });
+      gap(0.3); para("Kesan umum", S.observasi.kesan);
+    }
+
+    if (o.bimbingan) {
+      sec("Kartu Bimbingan", true);
+      [["dpl", "1. Bimbingan dengan Dosen Pembimbing", "Tanda tangan DPL"], ["pamong", "2. Bimbingan dengan Guru Pamong", "Tanda tangan guru pamong"]].forEach(function (c) {
+        h3(c[1]); gap(0.2);
+        var rows = S.bimbingan[c[0]].map(function (r, i) { return [String(i + 1), tgl(r.tgl), r.materi || "", r.ttd ? "Sudah" : ""]; });
+        table(["No", "Tanggal", "Materi Bimbingan", c[2]], [10, 32, 62, 36], rows, { minH: 9 });
+      });
+    }
+
+    if (o.perangkat) {
+      sec("Capaian Pembelajaran dan Alur Tujuan Pembelajaran", true);
+      para("Capaian Pembelajaran (CP)", S.rpp.cp);
+      var dm = DIMENSI.filter(function (d, i) { return S.rpp.dim && S.rpp.dim[i]; });
+      para("Dimensi Profil Lulusan", dm.join(", "));
+      gap(0.3);
+      line("Alur Tujuan Pembelajaran (ATP)", { bold: true });
+      if (S.rpp.atpRows.length) {
+        gap(0.1);
+        table(["No", "Tujuan Pembelajaran", "Materi dan Sumber", "JP", "Ke-"], [10, 62, 42, 12, 14],
+          S.rpp.atpRows.map(function (r, i) { return [String(i + 1), r.tp || "", r.materi || "", r.jp || "", r.ke || ""]; }), { minH: 8 });
+      } else if (filled(S.rpp.atp)) { line(S.rpp.atp, { indent: 4 }); } else { line("-", { indent: 4 }); }
+    }
+
+    if (o.rpp) {
+      sec("Rencana Pembelajaran", !o.perangkat);
+      if (!S.rpp.items.length) line("Belum ada pertemuan yang dicatat.", { italic: true });
+      S.rpp.items.forEach(function (it, i) {
+        h3("Pertemuan ke-" + (it.ke || i + 1));
+        kv("Tanggal", tgl(it.tgl)); kv("Mata Pelajaran", it.mapel); kv("Kelas / Fase", it.kelas);
+        kv("Materi Pokok", it.materi); kv("Alokasi Waktu", it.waktu);
+        kv("Prinsip", [it.p1 ? "Berkesadaran" : "", it.p2 ? "Bermakna" : "", it.p3 ? "Menggembirakan" : ""].filter(Boolean).join(", "));
+        para("Capaian dan Tujuan Pembelajaran", it.cp); para("Kegiatan Pendahuluan", it.awal); para("Kegiatan Inti", it.inti);
+        para("Kegiatan Penutup", it.akhir); para("Asesmen", it.asesmen); para("Refleksi", it.refleksi);
+        gap(0.5);
+      });
+    }
+
+    if (o.asesmen) {
+      sec("Asesmen", false);
+      para("Soal dan Kunci", S.rpp.soal);
+      para("Rubrik dan Instrumen Penilaian", S.rpp.rubrik);
+    }
+
+    if (o.laporan) {
+      sec("Kelengkapan Laporan dan Artikel", true);
+      h3("1. Laporan PPL"); gap(0.2);
+      var rl = [];
+      LAPORAN.forEach(function (b) { b[1].forEach(function (r) { rl.push([b[0] === LAPORAN[0][0] ? "Bab I" : b[0].indexOf("Bab II ") === 0 ? "Bab II" : "Bab III", r[1], String(r[2]), getp("nilai.lap." + r[0]) ? "Sudah" : "Belum"]); }); });
+      table(["Bab", "Bagian", "Poin", "Status"], [20, 80, 16, 24], rl, { minH: 8 });
+      line("Poin terpenuhi: " + pctWeights("lap", [].concat.apply([], LAPORAN.map(function (b) { return b[1]; })), true) + " dari 100", { bold: true }); gap(0.3);
+      h3("2. Draf Artikel"); gap(0.2);
+      var ra = ARTIKEL.map(function (r, i) { return [String(i + 1), r[0], String(r[1]), getp("nilai.art." + i) ? "Sudah" : "Belum"]; });
+      table(["No", "Aspek", "Poin", "Status"], [10, 90, 16, 24], ra, { minH: 8 });
+      line("Poin terpenuhi: " + pctWeights("art", ARTIKEL, false) + " dari 100", { bold: true });
+    }
 
     /* nomor halaman */
     var n = doc.getNumberOfPages();
@@ -763,11 +744,15 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     function msg(t) { if (out) out.textContent = t; }
     if (!window.jspdf) { msg("Pembuat PDF belum termuat. Periksa koneksi, lalu muat ulang halaman."); return; }
     if (!dl) { msg("Fitur unduh tidak tersedia di tampilan ini. Gunakan Salin semua data."); return; }
+    var o = {}, n = 0;
+    PDFOPT.forEach(function (x) { var el = document.getElementById("pdfopt_" + x[0]); o[x[0]] = !el || el.checked; if (o[x[0]]) n++; });
+    if (!n) { msg("Centang minimal satu bagian yang mau dicetak."); return; }
     msg("Membuat PDF…");
     try {
       await Promise.all(SECTIONS.map(function (s) { return flush(s); }));
       var nm = (S.profil.nama || "").replace(/[^A-Za-z0-9]+/g, "-").replace(/^-|-$/g, "");
-      await dl.save({ filename: "Berkas-PPL" + (nm ? "-" + nm : "") + ".pdf", data: buildPdf() });
+      var kind = n === PDFOPT.length ? "Berkas-PPL" : (!o.observasi && !o.bimbingan && !o.laporan) ? "RPP" : "Cetak-PPL";
+      await dl.save({ filename: kind + (nm ? "-" + nm : "") + ".pdf", data: buildPdf(o) });
       msg("PDF disimpan.");
     } catch (e) {
       msg(e && e.code === "declined" ? "Unduhan dibatalkan." : "PDF gagal dibuat atau disimpan. Coba lagi.");
