@@ -133,18 +133,18 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
 
   /* ---------- state ---------- */
   var DEF = function () {
-    return { profil: { tahun: "2026/2027" }, observasi: {}, bimbingan: { dpl: [], pamong: [] }, rpp: { items: [] }, nilai: {} };
+    return { profil: { tahun: "2026/2027" }, observasi: {}, bimbingan: { dpl: [], pamong: [] }, rpp: { items: [] }, nilai: {}, buku: { items: [] } };
   };
-  var SECTIONS = ["profil", "observasi", "bimbingan", "rpp", "nilai"];
+  var SECTIONS = ["profil", "observasi", "bimbingan", "rpp", "nilai", "buku"];
   var S = DEF();
   var store = { mode: "local", col: null };
   var tab = "ringkasan";
   var loaded = false;
-  var dl = null;
+  var dl = null, assetsApi = null;
 
   var TABS = [
     ["ringkasan", "Ringkasan"], ["profil", "Profil"], ["observasi", "Observasi"],
-    ["bimbingan", "Bimbingan"], ["jurnal", "Jurnal & RPP"], ["nilai", "Penilaian"], ["laporan", "Laporan"]
+    ["bimbingan", "Bimbingan"], ["jurnal", "Jurnal & RPP"], ["buku", "Buku ajar"], ["nilai", "Penilaian"], ["laporan", "Laporan"]
   ];
   var PRODI = ["Pendidikan Agama Islam (PAI)", "Pendidikan Guru MI (PGMI)", "Pendidikan Islam Anak Usia Dini (PIAUD)",
     "Tadris Matematika", "Tadris Bahasa Inggris", "Tadris Bahasa Arab", "Tadris Bahasa Indonesia"];
@@ -270,6 +270,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       while (S.bimbingan[k].length < 10) S.bimbingan[k].push({});
     });
     if (!Array.isArray(S.rpp.items)) S.rpp.items = [];
+    if (!S.buku || !Array.isArray(S.buku.items)) S.buku = { items: [] };
     if (!S.profil.tahun) S.profil.tahun = "2026/2027";
   }
 
@@ -277,6 +278,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     try {
       if (window.claude && window.claude.use) {
         try { dl = await window.claude.use("downloads"); } catch (e) { dl = null; }
+        try { assetsApi = await window.claude.use("assets"); } catch (e) { assetsApi = null; }
         var res = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
         var db = res[0], user = res[1];
         if (db && user) {
@@ -412,6 +414,29 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       '<div class="result"><b id="nhv">—</b><span id="nht" class="note"></span></div></section>';
   };
 
+
+  function mb(n) { return (n / 1048576).toFixed(1).replace(".", ",") + " MB"; }
+  views.buku = function () {
+    var items = S.buku.items;
+    var up = assetsApi
+      ? '<div class="grid"><label class="f wide" for="fbuku"><span>Berkas PDF<small>Buku ajar yang menjadi acuan RPP. Maksimal 20 MB.</small></span><input id="fbuku" type="file" accept="application/pdf,.pdf"></label>' +
+        '<label class="f" for="fbukunama"><span>Judul<small>Kosongkan untuk memakai nama berkas.</small></span><input id="fbukunama" type="text" placeholder="mis. Al-Qur\'an Hadis MTs Kelas VIII"></label>' +
+        '<label class="f" for="fbukucat"><span>Catatan<small>Bagian yang dipakai.</small></span><input id="fbukucat" type="text" placeholder="mis. Bab III, hlm 30 sampai 42"></label></div>' +
+        '<div class="sep"><button type="button" class="btn" data-act="upbuku">Unggah PDF</button></div>'
+      : '<div class="banner">Unggah hanya tersedia bagi pemilik halaman yang sudah masuk ke akun. Di tampilan ini fitur unggah tidak aktif.</div>';
+    var list = items.length ? items.map(function (it, i) {
+      var b = "buku.items." + i;
+      return '<div class="empty" style="text-align:left;display:flex;flex-direction:column;gap:10px"><div class="grid">' +
+        field(b + ".nama", "Judul") + field(b + ".catatan", "Catatan") + "</div>" +
+        '<div class="sep" style="align-items:center"><a class="btn ghost" style="text-decoration:none;display:inline-block" href="/_blob/' + esc(it.id) + '" target="_blank" rel="noopener">Buka PDF</a>' +
+        '<button type="button" class="btn danger" data-act="delbuku" data-i="' + i + '">Hapus berkas</button>' +
+        '<span class="mono note">' + esc(mb(it.ukuran || 0)) + (it.tgl ? " · diunggah " + esc(it.tgl) : "") + "</span></div></div>";
+    }).join("") : '<div class="empty">Belum ada buku ajar. Unggah PDF-nya supaya RPP, CP, dan soal bisa disusun dari isi bukunya.</div>';
+    return '<p class="note">Simpan buku ajar di sini sebagai sumber penyusunan RPP. Berkas disimpan pada halaman ini dan dapat dibuka Claude saat membantu menyusun RPP, CP, ATP, dan soal.</p>' +
+      '<section class="card"><h2>Unggah buku ajar</h2>' + up + '<p class="note" id="bukuMsg" role="status"></p></section>' +
+      '<section class="card"><h2>Buku tersimpan <span class="src">' + items.length + " berkas</span></h2>" + list + "</section>";
+  };
+
   function weighted(prefix, items, startKey) {
     return items.map(function (r, i) {
       var key = startKey ? r[0] : i, label = startKey ? r[1] : r[0], w = startKey ? r[2] : r[1];
@@ -485,6 +510,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       ["bimbingan", "Kartu bimbingan DPL", cnt("dpl"), 10, cnt("dpl") + " dari 10 sesi dicatat, " + ttd("dpl") + " bertanda tangan"],
       ["bimbingan", "Kartu bimbingan guru pamong", cnt("pamong"), 10, cnt("pamong") + " dari 10 sesi dicatat, " + ttd("pamong") + " bertanda tangan"],
       ["jurnal", "Jurnal dan RPP pertemuan", S.rpp.items.length, Math.max(3, S.rpp.items.length), S.rpp.items.length + " pertemuan. Laporan mensyaratkan dokumentasi minimal 3 pertemuan."],
+      ["buku", "Buku ajar yang diunggah", S.buku.items.length, 1, S.buku.items.length ? S.buku.items.length + " berkas" : "Belum ada. Unggah PDF buku ajar sebagai acuan RPP."],
       ["laporan", "Kelengkapan laporan PPL", lap, 100, lap + " dari 100 poin"],
       ["laporan", "Kelengkapan draf artikel", art, 100, art + " dari 100 poin"],
       ["nilai", "Nilai hasil PPL (NH)", h ? h.n : 0, 5, h ? "NH " + fmt(h.avg) + (h.n < 5 ? " (sementara)" : "") : "Belum ada komponen nilai"]
@@ -523,7 +549,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   document.addEventListener("click", function (e) {
     var t = e.target.closest ? e.target.closest("[data-tab],[data-go],[data-act]") : null; if (!t) return;
     if (t.dataset.tab) return go(t.dataset.tab);
-    if (t.dataset.go) return go(t.dataset.go === "observasi" || t.dataset.go === "bimbingan" || t.dataset.go === "jurnal" || t.dataset.go === "nilai" || t.dataset.go === "laporan" || t.dataset.go === "profil" ? t.dataset.go : "ringkasan");
+    if (t.dataset.go) return go(t.dataset.go === "observasi" || t.dataset.go === "bimbingan" || t.dataset.go === "jurnal" || t.dataset.go === "buku" || t.dataset.go === "nilai" || t.dataset.go === "laporan" || t.dataset.go === "profil" ? t.dataset.go : "ringkasan");
     var act = t.dataset.act;
     if (act === "addrpp") {
       S.rpp.items.push({ ke: String(S.rpp.items.length + 1) }); touch("rpp"); render();
@@ -533,6 +559,13 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
         t.setAttribute("data-armed", "1"); t.textContent = "Klik lagi untuk menghapus";
         setTimeout(function () { if (t.isConnected) { t.removeAttribute("data-armed"); t.textContent = "Hapus pertemuan ini"; } }, 3000);
       } else { S.rpp.items.splice(parseInt(t.dataset.i, 10), 1); touch("rpp"); render(); }
+    } else if (act === "upbuku") {
+      uploadBuku();
+    } else if (act === "delbuku") {
+      if (!t.hasAttribute("data-armed")) {
+        t.setAttribute("data-armed", "1"); t.textContent = "Klik lagi untuk menghapus";
+        setTimeout(function () { if (t.isConnected) { t.removeAttribute("data-armed"); t.textContent = "Hapus berkas"; } }, 3000);
+      } else { removeBuku(parseInt(t.dataset.i, 10)); }
     } else if (act === "contoh") {
       var has = filled(S.rpp.cp) || filled(S.rpp.atp) || S.rpp.items.length;
       if (has && !t.hasAttribute("data-armed")) {
@@ -735,6 +768,32 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     } catch (e) {
       msg(e && e.code === "declined" ? "Unduhan dibatalkan." : "PDF gagal dibuat atau disimpan. Coba lagi.");
     }
+  }
+
+  async function uploadBuku() {
+    var out = document.getElementById("bukuMsg");
+    function msg(t) { if (out) out.textContent = t; }
+    var inp = document.getElementById("fbuku"), f = inp && inp.files && inp.files[0];
+    if (!assetsApi) { msg("Unggah tidak tersedia di tampilan ini."); return; }
+    if (!f) { msg("Pilih berkas PDF dulu."); return; }
+    if (!/\.pdf$/i.test(f.name) && f.type !== "application/pdf") { msg("Berkas harus berformat PDF."); return; }
+    if (f.size > 20 * 1048576) { msg("Berkas " + mb(f.size) + " melebihi batas 20 MB. Kompres dulu."); return; }
+    msg("Mengunggah " + f.name + "…");
+    try {
+      var r = await assetsApi.upload(f, { type: "application/pdf" });
+      var nm = (document.getElementById("fbukunama").value || "").trim() || f.name.replace(/\.pdf$/i, "");
+      S.buku.items.push({ id: r.id, nama: nm, catatan: (document.getElementById("fbukucat").value || "").trim(), ukuran: r.sizeBytes, tgl: new Date().toISOString().slice(0, 10) });
+      touch("buku"); render();
+      var m2 = document.getElementById("bukuMsg"); if (m2) m2.textContent = "Terunggah dan tersimpan: " + nm + ".";
+    } catch (e) {
+      var c = e && e.code;
+      msg(c === "too_large" ? "Berkas terlalu besar. Kompres dulu." : c === "quota_or_state" ? "Ruang penyimpanan halaman ini penuh." : c === "rate_limited" ? "Terlalu sering. Coba lagi sebentar lagi." : "Unggah gagal. Coba lagi.");
+    }
+  }
+  async function removeBuku(i) {
+    var it = S.buku.items[i]; if (!it) return;
+    try { if (assetsApi) await assetsApi.delete(it.id); } catch (e) { /* tetap hapus baris */ }
+    S.buku.items.splice(i, 1); touch("buku"); render();
   }
 
   /* ---------- boot ---------- */
