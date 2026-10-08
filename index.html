@@ -660,7 +660,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       h2(LET.charAt(SEC++) + ". " + title);
     }
     var rppOnly = !o.observasi && !o.bimbingan && !o.laporan;
-    h1(rppOnly ? "PERANGKAT PEMBELAJARAN" : "BERKAS PRAKTIK PENGALAMAN LAPANGAN (PPL)");
+    h1(rppOnly ? "RENCANA PELAKSANAAN PEMBELAJARAN (RPP)" : "BERKAS PRAKTIK PENGALAMAN LAPANGAN (PPL)");
     line("Fakultas Tarbiyah dan Keguruan", { center: true });
     line("Universitas Islam Tribakti Lirboyo Kediri", { center: true });
     line("Tahun Akademik " + (P.tahun || "2026/2027"), { center: true });
@@ -714,7 +714,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     }
 
     if (o.rpp) {
-      sec("Rencana Pembelajaran", !o.perangkat);
+      sec("Rencana Pelaksanaan Pembelajaran (RPP)", !o.perangkat);
       if (!S.rpp.items.length) line("Belum ada pertemuan yang dicatat.", { italic: true });
       S.rpp.items.forEach(function (it, i) {
         h3("Pertemuan ke-" + (it.ke || i + 1));
