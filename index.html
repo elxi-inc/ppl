@@ -800,6 +800,8 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   /* ---------- boot ---------- */
   normalize(); render();
   function seed() {
+    var oldSample = typeof S.rpp.atp === "string" && /^(Semester 1|Bab III: Menggapai)/.test(S.rpp.atp) && !S.rpp.atpRows.length;
+    if (oldSample) { S.rpp.atp = ""; S.rpp.cp = ""; S.rpp.soal = ""; S.rpp.rubrik = ""; S.rpp.items = []; S.rpp.seeded = false; }
     var empty = !filled(S.rpp.cp) && !S.rpp.atpRows.length && !S.rpp.items.length && !filled(S.rpp.soal) && !filled(S.rpp.rubrik);
     if (S.rpp.seeded || !empty) return;
     S.rpp.cp = CONTOH.cp; S.rpp.atpRows = clone(CONTOH.atpRows); S.rpp.dim = clone(CONTOH.dim); S.rpp.soal = CONTOH.soal; S.rpp.rubrik = CONTOH.rubrik;
