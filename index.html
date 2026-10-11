@@ -144,7 +144,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
 
   var TABS = [
     ["ringkasan", "Ringkasan"], ["profil", "Profil"], ["observasi", "Observasi"],
-    ["bimbingan", "Bimbingan"], ["jurnal", "CP, ATP & RPP"], ["buku", "Buku ajar"], ["laporan", "Laporan"]
+    ["bimbingan", "Bimbingan"], ["jurnal", "CP, ATP & PPM"], ["buku", "Buku ajar"], ["laporan", "Laporan"]
   ];
   var PRODI = ["Pendidikan Agama Islam (PAI)", "Pendidikan Guru MI (PGMI)", "Pendidikan Islam Anak Usia Dini (PIAUD)",
     "Tadris Matematika", "Tadris Bahasa Inggris", "Tadris Bahasa Arab", "Tadris Bahasa Indonesia"];
@@ -194,7 +194,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   var ARTIKEL = [["Judul dan abstrak", 10], ["Pendahuluan", 15], ["Kajian pustaka dan landasan teori", 15], ["Metode penelitian", 15],
     ["Hasil dan pembahasan", 20], ["Kesimpulan dan implikasi", 10], ["Kebaruan dan kontribusi", 5], ["Tata tulis dan etika penulisan", 10]];
   var DIMENSI = ["Keimanan dan Ketakwaan terhadap Tuhan YME", "Kewargaan", "Penalaran Kritis", "Kreativitas", "Kolaborasi", "Kemandirian", "Kesehatan", "Komunikasi"];
-  var PDFOPT = [["profil", "Identitas praktikan"], ["observasi", "Hasil observasi"], ["bimbingan", "Kartu bimbingan"], ["perangkat", "CP, dimensi profil, dan ATP"], ["rpp", "RPP per pertemuan"], ["asesmen", "Soal dan rubrik asesmen"], ["laporan", "Kelengkapan laporan dan artikel"]];
+  var PDFOPT = [["profil", "Identitas praktikan"], ["observasi", "Hasil observasi"], ["bimbingan", "Kartu bimbingan"], ["perangkat", "CP, dimensi profil, dan ATP"], ["rpp", "PPM per pertemuan"], ["asesmen", "Soal dan rubrik asesmen"], ["laporan", "Kelengkapan laporan dan artikel"]];
 
   var SEKOLAH = {"lokasi": "SMP Islam Kepung, Jl. Harinjing No. 15 A, Karangdinoyo, Kepung, Kediri", "kepsek": "Abdul Haris Mufti, S.Pd", "kondisi": ["Luas lahan 2.070 m2 (terbangun 1.770 m2), bangunan 2 lantai. Ruang kelas 6 buah, kondisi baik. Perpustakaan 72 m2 (baik), lab IPA 120 m2 (rusak ringan), lab bahasa 56 m2 (baik), lab komputer 56 m2 (baik), aula serbaguna 180 m2 (baik), ruang ibadah/mushola, ruang UKS dan PMR/Pramuka (baik), ruang BK dan OSIS (rusak ringan), gudang (rusak berat), KM/WC guru 2 dan siswa 3 (rusak ringan). Ruang kantor: kepala sekolah, guru, tata usaha, dan tamu (baik).", "Lapangan upacara dan olahraga 336 m2; lapangan bola voli rusak ringan. Lengkapi tamanisasi, kebersihan, dan kerapian dari pengamatan langsung.", "Dikelola Yayasan Pendidikan Islam Kepung (ketua Miftahul Ulum, SH) dan komite sekolah (Dr. Lilik Nur Latifah, M.Pd.I). Kepala sekolah Abdul Haris Mufti, S.Pd; wakil kepala sekolah Muhamad Aris Muchlisin, S.Pd. Kasi kurikulum Muhamad Aris Muchlisin, S.Pd; kasi kesiswaan Shinta Laudya Putri Nagari; kasi sarana prasarana M. Qomarudin, S.Pd; kasi humas Naneng Minahaya, S.Pd. Akreditasi B (skor 86).", "Kepala tata usaha Atik Budiman, S.Pd.I dengan staf M. Wahyu Nur Huda dan Selly Vir Ginia; bendahara Washilatul Amaliyyah, S.Pd. Nomor statistik sekolah 204051310036. Tersedia daftar nilai pegangan guru, daftar kehadiran peserta didik, dan daftar hadir jamaah shalat dhuha.", "Tahun pelajaran 2026/2027: 106 siswa dalam 4 rombel (kelas VII 30 siswa, kelas VIII 64 siswa dalam 2 rombel, kelas IX 12 siswa). Jumlah siswa tiga tahun sebelumnya: 68 (2023/2024), 53 (2024/2025), 42 (2025/2026). Lengkapi potensi akademik dan non akademik dari pengamatan.", "Guru berjumlah 13 orang (12 berpendidikan S1, 1 setingkat SMA; 5 laki-laki dan 8 perempuan). Guru mata pelajaran: Pendidikan Agama 3 orang, serta masing-masing 1 orang untuk IPA, Matematika, Bahasa Indonesia, Bahasa Inggris, IPS, Penjasorkes, Seni Budaya, PKn, dan TIK. Sebagian guru telah mengikuti sertifikasi dan diklat (mis. diklat Canva).", "Tenaga pendukung 9 orang: tata usaha 3, perpustakaan 1, laboran lab IPA 1, teknisi lab komputer 1, laboran lab bahasa 1, kantin 1, tukang kebun 1.", "Belum ada di profil sekolah. Isi dari pengamatan: hubungan guru dengan guru, guru dengan siswa, siswa dengan siswa, dan guru dengan tata usaha.", "Peserta didik hadir pukul 07.00 (10 menit sebelum bel) dan wajib hafalan surat pendek sebelum pelajaran. Terlambat melapor ke guru piket; terlambat 3 kali berturut-turut dikenai sanksi edukatif. Upacara bendera setiap Senin. Seragam: Senin dan Selasa seragam khas, Rabu dan Kamis biru putih, Jumat dan Sabtu Pramuka. Kelas dibersihkan sebelum pelajaran. Dilarang membawa HP ke sekolah. Wajib bersikap santun dan memberi salam kepada guru.", "Tersedia ruang BK (rusak ringan). Keterlambatan ditangani guru piket harian dan BP. Guru BK belum tercatat di profil; lengkapi dari pengamatan.", "Tersedia ruang PMR/Pramuka (baik). Daftar kegiatan ekstrakurikuler belum tercatat di profil; lengkapi dari pengamatan.", "OSIS (memiliki ruang, rusak ringan), UKS (memiliki ruang, baik), dan komite sekolah.", "Ada ruang koperasi 3 x 3 m (baik). Pengelola dan jenis usaha belum tercatat; lengkapi dari pengamatan."]};
 
@@ -312,7 +312,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       field("profil.kepsek", "Kepala sekolah / madrasah", { hint: "Dipakai di lembar persetujuan laporan (Lampiran 2)." }) +
       field("profil.mapel", "Mata pelajaran yang diampu", { hint: "Mata pelajaran yang kamu ajar selama PPL." }) +
       field("profil.kelas", "Kelas / fase yang diajar", { ph: "mis. X / Fase E", hint: "Kelas yang kamu pegang. Tanya guru pamong kalau belum tahu fasenya." }) +
-      field("profil.jamMulai", "Jam mengajar mulai", { type: "time", hint: "Dipakai sebagai jam default di RPP baru." }) +
+      field("profil.jamMulai", "Jam mengajar mulai", { type: "time", hint: "Dipakai sebagai jam default di PPM baru." }) +
       field("profil.jamSelesai", "Jam mengajar selesai", { type: "time" }) +
       field("profil.mulai", "Mulai PPL", { type: "date", hint: "Hari pertama kamu hadir di sekolah." }) +
       field("profil.selesai", "Selesai PPL", { type: "date", hint: "Hari terakhir PPL di sekolah." }) +
@@ -343,7 +343,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       var b = "bimbingan." + key + "." + i;
       rows += '<div class="rw"><span class="no">' + (i + 1) + "</span>" +
          '<input type="date" title="Tanggal bimbingan" aria-label="Tanggal bimbingan ' + (i + 1) + '" data-k="' + b + '.tgl" value="' + esc(getp(b + ".tgl")) + '">' +
-         '<input type="text" aria-label="Materi bimbingan ' + (i + 1) + '" data-k="' + b + '.materi" placeholder="mis. penyusunan RPP, evaluasi mengajar" value="' + esc(getp(b + ".materi")) + '">' +
+         '<input type="text" aria-label="Materi bimbingan ' + (i + 1) + '" data-k="' + b + '.materi" placeholder="mis. penyusunan PPM, evaluasi mengajar" value="' + esc(getp(b + ".materi")) + '">' +
         '<label class="chk"><input type="checkbox" data-k="' + b + '.ttd"' + (getp(b + ".ttd") ? " checked" : "") + "><span>TTD " + who + "</span></label></div>";
     }
     return '<section class="card"><h2>' + title + '<span class="src">' + src + "</span></h2>" +
@@ -408,8 +408,8 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       tip("Panduan menyusun TP dan ATP", "Rumus tujuan: Peserta didik mampu + kata kerja (membaca, mengartikan, menganalisis, menyajikan, menerapkan) + materinya. Satu tujuan satu kemampuan yang bisa diamati. Urutkan dari yang paling dasar ke yang lebih kompleks, beri alokasi JP, dan tentukan diajarkan di pertemuan ke berapa. Total JP sebaiknya sama dengan jam yang tersedia untuk bab ini.") +
       (rows.length ? rows.map(atpRow).join("") : '<div class="empty">Belum ada tujuan pembelajaran. Tambahkan tujuan pertama.</div>') +
       '<div><button type="button" class="btn" data-act="addatp">Tambah tujuan</button></div></section>';
-    var s3 = '<section class="card"><h2>Langkah 3. RPP per pertemuan <span class="src">' + items.length + " entri</span></h2>" +
-      tip("Panduan menyusun RPP", "Buat satu entri untuk setiap pertemuan. Turunkan dari ATP: tujuan di pertemuan itu, lalu kegiatan awal, inti, dan penutup berurutan lengkap dengan menitnya. Laporan mensyaratkan dokumentasi minimal 3 pertemuan.") +
+    var s3 = '<section class="card"><h2>Langkah 3. PPM per pertemuan <span class="src">' + items.length + " entri</span></h2>" +
+      tip("Panduan menyusun PPM", "Buat satu entri untuk setiap pertemuan. Turunkan dari ATP: tujuan di pertemuan itu, lalu kegiatan awal, inti, dan penutup berurutan lengkap dengan menitnya. Laporan mensyaratkan dokumentasi minimal 3 pertemuan.") +
       (items.length ? items.map(rppEntry).join("") : '<div class="empty">Belum ada pertemuan. Tambahkan setelah ATP tersusun.</div>') +
       '<div><button type="button" class="btn" data-act="addrpp">Tambah pertemuan</button></div></section>';
     var s4 = '<section class="card"><h2>Langkah 4. Asesmen</h2>' +
@@ -424,7 +424,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
   views.buku = function () {
     var items = S.buku.items;
     var up = assetsApi
-      ? '<div class="grid"><label class="f wide" for="fbuku"><span>Berkas PDF<small>Buku ajar yang menjadi acuan RPP. Maksimal 20 MB.</small></span><input id="fbuku" type="file" accept="application/pdf,.pdf"></label>' +
+      ? '<div class="grid"><label class="f wide" for="fbuku"><span>Berkas PDF<small>Buku ajar yang menjadi acuan PPM. Maksimal 20 MB.</small></span><input id="fbuku" type="file" accept="application/pdf,.pdf"></label>' +
         '<label class="f" for="fbukunama"><span>Judul<small>Kosongkan untuk memakai nama berkas.</small></span><input id="fbukunama" type="text" placeholder="mis. Al-Qur\'an Hadis MTs Kelas VIII"></label>' +
         '<label class="f" for="fbukucat"><span>Catatan<small>Bagian yang dipakai.</small></span><input id="fbukucat" type="text" placeholder="mis. Bab III, hlm 30 sampai 42"></label></div>' +
         '<div class="sep"><button type="button" class="btn" data-act="upbuku">Unggah PDF</button></div>'
@@ -436,8 +436,8 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
         '<div class="sep" style="align-items:center"><a class="btn ghost" style="text-decoration:none;display:inline-block" href="/_blob/' + esc(it.id) + '" target="_blank" rel="noopener">Buka PDF</a>' +
         '<button type="button" class="btn danger" data-act="delbuku" data-i="' + i + '">Hapus berkas</button>' +
         '<span class="mono note">' + esc(mb(it.ukuran || 0)) + (it.tgl ? " · diunggah " + esc(it.tgl) : "") + "</span></div></div>";
-    }).join("") : '<div class="empty">Belum ada buku ajar. Unggah PDF-nya supaya RPP, CP, dan soal bisa disusun dari isi bukunya.</div>';
-    return '<p class="note">Simpan buku ajar di sini sebagai sumber penyusunan RPP. Berkas disimpan pada halaman ini dan dapat dibuka Claude saat membantu menyusun RPP, CP, ATP, dan soal.</p>' +
+    }).join("") : '<div class="empty">Belum ada buku ajar. Unggah PDF-nya supaya PPM, CP, dan soal bisa disusun dari isi bukunya.</div>';
+    return '<p class="note">Simpan buku ajar di sini sebagai sumber penyusunan PPM. Berkas disimpan pada halaman ini dan dapat dibuka Claude saat membantu menyusun PPM, CP, ATP, dan soal.</p>' +
       '<section class="card"><h2>Unggah buku ajar</h2>' + up + '<p class="note" id="bukuMsg" role="status"></p></section>' +
       '<section class="card"><h2>Buku tersimpan <span class="src">' + items.length + " berkas</span></h2>" + list + "</section>";
   };
@@ -488,8 +488,8 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       ["bimbingan", "Kartu bimbingan DPL", cnt("dpl"), 10, cnt("dpl") + " dari 10 sesi dicatat, " + ttd("dpl") + " bertanda tangan"],
       ["bimbingan", "Kartu bimbingan guru pamong", cnt("pamong"), 10, cnt("pamong") + " dari 10 sesi dicatat, " + ttd("pamong") + " bertanda tangan"],
       ["jurnal", "CP, ATP, dan asesmen", perangkat, 3, (filled(S.rpp.cp) ? "CP terisi" : "CP kosong") + ", " + S.rpp.atpRows.length + " tujuan pembelajaran, " + (filled(S.rpp.soal) || filled(S.rpp.rubrik) ? "asesmen terisi" : "asesmen kosong")],
-      ["jurnal", "RPP per pertemuan", S.rpp.items.length, Math.max(3, S.rpp.items.length), S.rpp.items.length + " pertemuan. Laporan mensyaratkan dokumentasi minimal 3 pertemuan."],
-      ["buku", "Buku ajar yang diunggah", S.buku.items.length, 1, S.buku.items.length ? S.buku.items.length + " berkas" : "Belum ada. Unggah PDF buku ajar sebagai acuan RPP."],
+      ["jurnal", "PPM per pertemuan", S.rpp.items.length, Math.max(3, S.rpp.items.length), S.rpp.items.length + " pertemuan. Laporan mensyaratkan dokumentasi minimal 3 pertemuan."],
+      ["buku", "Buku ajar yang diunggah", S.buku.items.length, 1, S.buku.items.length ? S.buku.items.length + " berkas" : "Belum ada. Unggah PDF buku ajar sebagai acuan PPM."],
       ["laporan", "Kelengkapan laporan PPL", lap, 100, lap + " dari 100 poin"],
       ["laporan", "Kelengkapan draf artikel", art, 100, art + " dari 100 poin"]
     ];
@@ -503,7 +503,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       '<section class="card"><h2>Cetak PDF</h2>' +
       '<p class="note">Centang bagian yang mau dicetak, atau pakai pilihan cepat. Format mengikuti ketentuan laporan di buku pedoman: kertas A4, Times New Roman 12, spasi 1,5, margin kiri 4 cm dan margin atas, kanan, bawah 3 cm. Isi tabel memakai spasi 1. Tulisan non-Latin seperti huruf Arab belum bisa ditampilkan di PDF.</p>' +
       '<div class="ckgrid">' + opts + "</div>" +
-      '<div class="sep"><button type="button" class="btn ghost" data-act="pdfpreset" data-p="all">Cetak keseluruhan</button><button type="button" class="btn ghost" data-act="pdfpreset" data-p="rpp">RPP saja (CP, ATP, RPP, asesmen)</button></div>' +
+      '<div class="sep"><button type="button" class="btn ghost" data-act="pdfpreset" data-p="all">Cetak keseluruhan</button><button type="button" class="btn ghost" data-act="pdfpreset" data-p="rpp">PPM saja (CP, ATP, PPM, asesmen)</button></div>' +
       '<div class="sep"><button type="button" class="btn" data-act="pdf">Unduh PDF</button></div>' +
       '<p class="note" id="pdfMsg" role="status"></p></section>' +
       '<section class="card"><h2>Cadangan data</h2><p class="note">Data tersimpan otomatis. Salin sebagai teks bila ingin menyimpan cadangan sendiri.</p>' +
@@ -662,7 +662,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
       h2(LET.charAt(SEC++) + ". " + title);
     }
     var rppOnly = !o.observasi && !o.bimbingan && !o.laporan;
-    h1(rppOnly ? "RENCANA PELAKSANAAN PEMBELAJARAN (RPP)" : "BERKAS PRAKTIK PENGALAMAN LAPANGAN (PPL)");
+    h1(rppOnly ? "PERENCANAAN PEMBELAJARAN MENDALAM (PPM)" : "BERKAS PRAKTIK PENGALAMAN LAPANGAN (PPL)");
     line("Fakultas Tarbiyah dan Keguruan", { center: true });
     line("Universitas Islam Tribakti Lirboyo Kediri", { center: true });
     line("Tahun Akademik " + (P.tahun || "2026/2027"), { center: true });
@@ -716,7 +716,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     }
 
     if (o.rpp) {
-      sec("Rencana Pelaksanaan Pembelajaran (RPP)", !o.perangkat);
+      sec("Perencanaan Pembelajaran Mendalam (PPM)", !o.perangkat);
       if (!S.rpp.items.length) line("Belum ada pertemuan yang dicatat.", { italic: true });
       S.rpp.items.forEach(function (it, i) {
         h3("Pertemuan ke-" + (it.ke || i + 1));
@@ -765,7 +765,7 @@ textarea.out { font-family: var(--font-mono); font-size: 12px; min-height: 140px
     try {
       await Promise.all(SECTIONS.map(function (s) { return flush(s); }));
       var nm = (S.profil.nama || "").replace(/[^A-Za-z0-9]+/g, "-").replace(/^-|-$/g, "");
-      var kind = n === PDFOPT.length ? "Berkas-PPL" : (!o.observasi && !o.bimbingan && !o.laporan) ? "RPP" : "Cetak-PPL";
+      var kind = n === PDFOPT.length ? "Berkas-PPL" : (!o.observasi && !o.bimbingan && !o.laporan) ? "PPM" : "Cetak-PPL";
       await dl.save({ filename: kind + (nm ? "-" + nm : "") + ".pdf", data: buildPdf(o) });
       msg("PDF disimpan.");
     } catch (e) {
